@@ -1,0 +1,30 @@
+<style>
+	.transparent_class {
+	  /* IE 8 */
+	  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+
+	  /* IE 5-7 */
+	  filter: alpha(opacity=50);
+
+	  /* Netscape */
+	  -moz-opacity: 0.5;
+
+	  /* Safari 1.x */
+	  -khtml-opacity: 0.5;
+
+	  /* Good browsers */
+	  opacity: 0.5;
+	  
+	  z-index: 99 !important; 
+	  position: relative; 
+	  left: 0; top: 0; right: 0; bottom: 0; margin: auto; 
+	  background-color: white;
+	  width:100%;
+	  height:680px;
+	}
+</style>
+
+<div id="loadingDIV" class="dataTables_processing box-body text-center transparent_class">
+	<p></p><h1>Gathering your data...</h1><br />
+	<img src="{{ url_for('static', filename='img/chronos.gif') }}"></img>
+</div>

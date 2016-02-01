@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="description" content="Login in VCOMMSYNC Crossroads">
+		<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+		<meta name="keywords" content="{{app.config["KEYWORDS"]}}">
+		<meta name="author" content="{{app.config["AUTHOR"]}}">
+		<title>{{app.config["TITLE"]}} | {{app.config["PAGETITLE"]}}</title>
+		<link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='img/favicon.ico')}}">
+		<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+		<!-- Bootstrap 3.3.2 -->
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css')}}" />
+		<!-- FontAwesome 4.3.0 -->
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+		<!-- Ionicons 2.0.0 -->
+		<link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+		<!-- DATA TABLES -->
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='plugins/datatables/dataTables.bootstrap.css')}}" />
+		<!-- Theme style -->
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='dist/css/AdminLTE.min.css')}}" />
+		<!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='dist/css/skins/_all-skins.min.css')}}" />
+
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='plugins/datatables/dataTables.tableTools.css')}}" />
+
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='plugins/datatables/editor.bootstrap.css')}}" />
+
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='plugins/byrei-dyndiv_0.5.css')}}" />
+		<script src="{{ url_for('static', filename='plugins/byrei-dyndiv_1.0rc1-src.js')}}"></script>
+		<style>
+			tfoot input {
+				width: 100%;
+				padding: 3px;
+				box-sizing: border-box;
+			}
+			tfoot { 
+					display: table-header-group; 
+			}
+			
+			.ToolButtonDIV {
+				 width: 239px;
+				 height: 42px;
+				 background: #ccc;
+				 border: 2px solid #aaa;
+				 padding:4px;
+				 top: -52px;
+				 left: 450px;
+				 position: absolute;
+			}
+
+			.PageDIV {
+				 top: 30px;
+				 height: 36px;
+				 /* background: #ccc;
+				 border: 1px solid #aaa; */
+				 padding:0px;
+				 left: 500px;
+				 position: absolute;
+			}
+			.PageDIVbot {
+				 bottom: -36px;
+				 height: 36px;
+				 /* background: #ccc;
+				 border: 1px solid #aaa; */
+				 padding:0px;
+				 left: 500px;
+				 position: absolute;
+			}
+
+			.FilterDIVbot {
+				 bottom: -36px;
+				 height: 32px;
+				 /* background: #ccc;
+				 border: 1px solid #aaa; */
+				 padding:0px;
+				 right: 0px;
+				 position: absolute;
+			}
+
+			.LengthDIVbot {
+				 bottom: -36px;
+				 height: 34px;
+				 /* background: #ccc;
+				 border: 1px solid #aaa; */
+				 padding:0px;
+				 left: 0px;
+				 position: absolute;
+			}
+		</style>
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body class="skin-blue">
+		<div class="wrapper">
+			<header class="main-header">
+				<!-- Logo -->
+				<a href="index" class="logo"><i class="fa fa-crosshairs fa-2x" style="text-align: center;"></i> <b>{{app.config["TITLE"]}}</b></a>
+				<!-- Header Navbar: style can be found in header.less -->
+				<nav class="navbar navbar-static-top" role="navigation">
+					<!-- Sidebar toggle button-->
+					<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+						<span class="sr-only">Toggle navigation</span>
+					</a>
+					<div class="navbar-custom-menu">
+						<ul class="nav navbar-nav">
+
+							{% include 'notice_menu.html' %}
+
+							{% include 'user_menu.html' %}
+
+						</ul>
+					</div>
+				</nav>
+			</header>
+
+			{% include 'leftnav.html' %}
+
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<h1>
+						{{app.config["PAGETITLE"]}}
+						<small>Dashboard</small>
+					</h1>
+
+					{% include 'breadcrumbs.html' %}
+
+				</section>
+
+				<!-- Main content -->
+				<section class="content">
+					<!-- Main row -->
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="box">
+								<!-- ><div class="box-header">
+									<h2 class="box-title">My Active Listings</h2>
+								</div> --><!-- /.box-header -->
+									<div id="MainDIV" class="box-body">
+										{% block body %}
+										{% endblock %}
+									</div>
+							</div><!-- /.box -->
+						</div><!-- /.col -->
+					</div><!-- /.row -->
+				</section><!-- /.content -->
+			</div><!-- /.content-wrapper -->
+
+			{% include 'footer.html' %}
+
+		</div><!-- ./wrapper -->
+		<!-- jQuery 2.1.3 -->
+		<script src="{{ url_for('static', filename='plugins/jQuery/jQuery-2.1.3.min.js')}}"></script>
+
+		<!-- jQuery UI 1.11.2 -->
+		<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.min.js" type="text/javascript"></script>
+		<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+		<script>
+			$.widget.bridge('uibutton', $.ui.button);
+		</script>
+		<!-- Bootstrap 3.3.2 JS -->
+		<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js')}}" type="text/javascript"></script>
+
+		<!-- DATA TABLES SCRIPT -->
+		<script src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js" type="text/javascript"></script>
+
+		<script src="{{ url_for('static', filename='plugins/datatables/jquery.dataTables.js')}}" type="text/javascript"></script>
+
+		<script src="{{ url_for('static', filename='plugins/datatables/dataTables.bootstrap.js')}}" type="text/javascript"></script>
+
+		<script src="{{ url_for('static', filename='plugins/datatables/dataTables.tableTools.min.js')}}" type="text/javascript"></script>
+
+		<script src="{{ url_for('static', filename='plugins/datatables/dataTables.editor.min.js')}}" type="text/javascript"></script>
+
+		<!-- AdminLTE App -->
+		<script src="{{ url_for('static', filename='dist/js/app.min.js')}}" type="text/javascript"></script>
+		{% block content %}
+		{% endblock %}
+	</body>
+</html>

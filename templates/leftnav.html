@@ -1,0 +1,39 @@
+<!-- Left side column. contains the logo and sidebar -->
+<aside class="main-sidebar">
+	<!-- sidebar: style can be found in sidebar.less -->
+	<section class="sidebar">
+		<!-- sidebar menu: : style can be found in sidebar.less -->
+		<ul class="sidebar-menu">
+			<li class="header">MAIN NAVIGATION</li>
+			<li><a href="../myactivelistings"><i class="fa fa-tags {{app.config["MYPRODUCTS"]}}"></i> My Products</a></li>
+			<li><a href="../myorders"><i class="fa  fa-cart-plus {{app.config["MYORDERS"]}}"></i> My Orders</a></li>
+
+			<li class="treeview">
+				<a href="#">
+					<i class="fa fa-institution {{app.config["MYSTORES"]}}"></i> <span>My Stores</span> <i class="fa fa-angle-left pull-right"></i>
+				</a>
+				<ul class="treeview-menu">
+					<li><a href=""><i class="fa fa-circle-o"></i> Amazon</a></li>
+					<li><a href="../ebaystore"><i class="fa fa-circle-o"></i> eBay</a></li>
+					<li><a href=""><i class="fa fa-circle-o"></i> Etsy</a></li>
+				</ul>
+			</li>
+
+			<li class="treeview">
+				<a href="#">
+					<i class="fa fa-building-o {{app.config["MYSUPPLIERS"]}}"></i> <span>My Suppliers</span> <i class="fa fa-angle-left pull-right"></i>
+					</a>
+					<ul class="treeview-menu">
+						<li><a href=""><i class="fa fa-circle-o"></i> Acme 1</a></li>
+						<li><a href=""><i class="fa fa-circle-o"></i> Acme 2</a></li>
+					</ul>
+			</li>
+
+			<li class="header">CONTROL PANEL</li>
+			<li><a href="../faq"><i class="fa fa-book"></i> FAQ</a></li>
+			<li><a href="../settings"><i class="fa text-danger fa-cogs"></i> Settings</a></li>
+			<li><a href="../help"><i class="fa fa-life-ring text-info"></i> Get Help</a></li>
+		</ul>
+	</section>
+	<!-- /.sidebar -->
+</aside>

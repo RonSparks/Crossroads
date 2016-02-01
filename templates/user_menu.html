@@ -1,0 +1,61 @@
+<!-- User Account: style can be found in dropdown.less -->
+<li class="dropdown user user-menu">
+	<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+			<img src="{% if app.config["FIRST_NAME"] == "Teddy" %}
+						{{ url_for('static', filename='dist/img/user007-160x160.png')}}
+					{% elif app.config["FIRST_NAME"] == "Rob" %}
+						{{ url_for('static', filename='dist/img/rob.jpg')}}
+					{% elif app.config["FIRST_NAME"] == "Risa" %}
+						{{ url_for('static', filename='dist/img/risawight.jpg')}}
+					{% elif app.config["FIRST_NAME"] == "Kari" %}
+						{{ url_for('static', filename='dist/img/avatar2.png')}}
+					{% elif app.config["FIRST_NAME"] == "Shawna" %}
+						{{ url_for('static', filename='dist/img/shawna.jpg')}}
+					{% endif %}" class="user-image" alt="User Image"/>
+		<span class="hidden-xs">{{app.config["FIRST_NAME"]}} {{app.config["LAST_NAME"]}}</span>
+	</a>
+	<ul class="dropdown-menu">
+		<!-- User image -->
+		<li class="user-header">
+			<img src="{% if app.config["FIRST_NAME"] == "Teddy" %}
+						{{ url_for('static', filename='dist/img/user007-160x160.png')}}
+					{% elif app.config["FIRST_NAME"] == "Rob" %}
+						{{ url_for('static', filename='dist/img/rob.jpg')}}
+					{% elif app.config["FIRST_NAME"] == "Risa" %}
+						{{ url_for('static', filename='dist/img/risawight.jpg')}}
+					{% elif app.config["FIRST_NAME"] == "Kari" %}
+						{{ url_for('static', filename='dist/img/avatar2.png')}}
+					{% elif app.config["FIRST_NAME"] == "Shawna" %}
+						{{ url_for('static', filename='dist/img/shawna.jpg')}}
+					{% endif %}" class="img-circle" alt="User Image" />
+			<p>
+				{{app.config["FIRST_NAME"]}} {{app.config["LAST_NAME"]}}
+				<small>Member since Nov. 2012</small>
+			</p>
+		</li>
+		<!-- Menu Body -->
+		<li class="user-body">
+			<div class="col-xs-4 text-center">
+				<a href="#">Option 1</a>
+			</div>
+			<div class="col-xs-4 text-center">
+				<a href="#">Option 2</a>
+			</div>
+			<div class="col-xs-4 text-center">
+				<a href="#">Option 3</a>
+			</div>
+		</li>
+		<!-- Menu Footer-->
+		<li class="user-footer">
+			<div class="pull-left">
+				<a href="#" class="btn btn-default btn-flat">Profile</a>
+			</div>
+			<div class="pull-right">
+				<a href="{{ url_for('logout') }}" class="btn btn-default btn-flat">Sign out</a>
+			</div>
+		</li>
+	</ul>
+</li>
+<li class="btn" style="background-color: #3C8DBC;">
+	<a href="{{ url_for('logout') }}"><button class="btn btn-block btn-warning">Sign out</button></a>
+</li>

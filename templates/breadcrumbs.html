@@ -1,0 +1,8 @@
+<ol class="breadcrumb">
+	{% if app.config["PAGETITLE"] != "Home" %}
+		<li><a href="../home"><i class="fa fa-crosshairs"></i> Home</a></li>
+		<li class="active">{{app.config["PAGETITLE"]}}</li>
+	{%else%}
+		<li><i class="fa fa-crosshairs"></i> Home</li>
+	{% endif %}
+</ol>

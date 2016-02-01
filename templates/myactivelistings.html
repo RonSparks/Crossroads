@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="description" content="Login in VCOMMSYNC Crossroads">
+		<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+		<meta name="keywords" content="{{app.config["KEYWORDS"]}}">
+		<meta name="author" content="{{app.config["AUTHOR"]}}">
+		<title>{{app.config["TITLE"]}} | {{app.config["PAGETITLE"]}}</title>
+		<link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='img/favicon.ico')}}">
+		<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+		<!-- Bootstrap 3.3.2 -->
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css')}}" />
+		<!-- FontAwesome 4.3.0 -->
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+		<!-- Ionicons 2.0.0 -->
+		<link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+		<!-- DATA TABLES -->
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='plugins/datatables/dataTables.bootstrap.css')}}" />
+		<!-- Theme style -->
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='dist/css/AdminLTE.min.css')}}" />
+		<!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='dist/css/skins/_all-skins.min.css')}}" />
+
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='plugins/datatables/dataTables.tableTools.css')}}" />
+
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='plugins/datatables/editor.bootstrap.css')}}" />
+
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='plugins/byrei-dyndiv_0.5.css')}}" />
+		<script src="{{ url_for('static', filename='plugins/byrei-dyndiv_1.0rc1-src.js')}}"></script>
+		<style>
+			tfoot input {
+				width: 100%;
+				padding: 3px;
+				box-sizing: border-box;
+			}
+			tfoot { 
+					display: table-header-group; 
+			}
+
+			.PageDIV {
+				 top: 35px;
+				 height: 36px;
+				/*	 background: #ccc;
+					 border: 1px solid #aaa; */
+				 padding:0px;
+				 left: 185px;
+				 position: absolute;
+			}
+
+			.PageDIVbot {
+				 bottom: -36px;
+				 height: 36px;
+				 /* background: #ccc;
+				 border: 1px solid #aaa; */
+				 padding:0px;
+				 left: 500px;
+				 position: absolute;
+			}
+
+			.FilterDIVbot {
+				 bottom: -36px;
+				 height: 32px;
+				 /* background: #ccc;
+				 border: 1px solid #aaa; */
+				 padding:0px;
+				 right: 0px;
+				 position: absolute;
+			}
+
+			.LengthDIVbot {
+				 bottom: -36px;
+				 height: 34px;
+				 /* background: #ccc;
+				 border: 1px solid #aaa; */
+				 padding:0px;
+				 left: 0px;
+				 position: absolute;
+			}
+
+			td.edit-control {
+				width:90px;
+				height:43px;
+				background: url('{{ url_for('static', filename='img/edit.png')}}') no-repeat center center;
+				cursor: pointer;
+			}
+		</style>
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body class="skin-blue">
+		<div class="wrapper">
+			<header class="main-header">
+				<!-- Logo -->
+				<a href="../index" class="logo"><i class="fa fa-crosshairs fa-2x" style="text-align: center;"></i> <b>{{app.config["TITLE"]}}</b></a>
+				<!-- Header Navbar: style can be found in header.less -->
+				<nav class="navbar navbar-static-top" role="navigation">
+					<!-- Sidebar toggle button-->
+					<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+						<span class="sr-only">Toggle navigation</span>
+					</a>
+					<div class="navbar-custom-menu">
+						<ul class="nav navbar-nav">
+
+							{% include 'notice_menu.html' %}
+
+							{% include 'user_menu.html' %}
+
+						</ul>
+					</div>
+				</nav>
+			</header>
+
+			{% include 'leftnav.html' %}
+
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<h1>
+						Summary of My Active Listings
+						<small>Dashboard</small>
+					</h1>
+
+					{% include 'breadcrumbs.html' %}
+
+				</section>
+
+				<!-- Main content -->
+				<section class="content">
+					<!-- Main row -->
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="box">
+								<!-- ><div class="box-header">
+									<h2 class="box-title">My Active Listings</h2>
+								</div> --><!-- /.box-header -->
+								<div id="tableDIV" class="box-body">
+									<!-- table table-striped table-bordered -->
+									<!-- <table id="myactive" class="display table table-bordered table-striped table-hover" cellspacing="0" width="100%"> -->
+									<table id="myactive"class="display table table-bordered table-striped table-hover table-condensed" cellspacing="0" width="100%">
+										<thead>
+											<tr>
+												<th colspan='8'>
+													<div>
+														Toggle columns: 
+														<a class="toggle-vis" data-column="2">Picture</a> - 
+														<a class="toggle-vis" data-column="3">SKU</a> - 
+														<a class="toggle-vis" data-column="4">ItemId</a> - 
+														<a class="toggle-vis" data-column="5">Title</a> - 
+														<a class="toggle-vis" data-column="6">Price</a> - 
+														<a class="toggle-vis" data-column="7">Total Quantity</a> - 
+														<a class="toggle-vis" data-column="8">Amazon</a> - 
+														<a class="toggle-vis" data-column="9">eBay</a> - 
+														<a class="toggle-vis" data-column="10">Etsy</a>
+													</div>
+												</th>
+											</tr>
+											<tr>
+												<th></th>
+												<th></th>
+												<th>Picture</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>SKU</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>ItemId</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>Title</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>Price</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>Total Quantity</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>Amazon</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>eBay</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>Etsy</th>
+											</tr>
+										</thead>
+
+										<tfoot>
+											<tr>
+												<th></th>
+												<th></th>
+												<th>Picture</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>SKU</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>ItemId</th>
+												<th data-toggle='toolti1p' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>Title</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>Price</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>Total Quantity</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>Amazon</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>eBay</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>Etsy</th>
+											</tr>
+										</tfoot>
+										<tbody>
+
+										</tbody>
+									</table>
+								</div><!-- /.box-body -->
+
+								{% include 'loadingDT.html' %}
+
+							</div><!-- /.box -->
+						</div><!-- /.col -->
+					</div><!-- /.row -->
+				</section><!-- /.content -->
+			</div><!-- /.content-wrapper -->
+
+			{% include 'footer.html' %}
+
+		</div><!-- ./wrapper -->
+		<!-- jQuery 2.1.3 -->
+		<script src="{{ url_for('static', filename='plugins/jQuery/jQuery-2.1.3.min.js')}}"></script>
+
+		<!-- jQuery UI 1.11.2 -->
+		<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.min.js" type="text/javascript"></script>
+		<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+		<script>
+			$.widget.bridge('uibutton', $.ui.button);
+		</script>
+		<!-- Bootstrap 3.3.2 JS -->
+		<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js')}}" type="text/javascript"></script>
+
+		<!-- DATA TABLES SCRIPT -->
+		<script src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js" type="text/javascript"></script>
+
+		<script src="{{ url_for('static', filename='plugins/datatables/jquery.dataTables.js')}}" type="text/javascript"></script>
+
+		<script src="{{ url_for('static', filename='plugins/datatables/dataTables.bootstrap.js')}}" type="text/javascript"></script>
+
+		<script src="{{ url_for('static', filename='plugins/datatables/dataTables.tableTools.min.js')}}" type="text/javascript"></script>
+
+		<script src="{{ url_for('static', filename='plugins/datatables/dataTables.editor.js')}}" type="text/javascript"></script>
+
+
+		<!-- AdminLTE App -->
+		<script src="{{ url_for('static', filename='dist/js/app.min.js')}}" type="text/javascript"></script>
+
+		<!-- page script -->
+		<script type="text/javascript">
+			var editor;
+		
+			$(document).ready(function() {
+
+				// Setup - add a text input to each footer cell
+				$('#myactive tfoot th').each( function () {
+					if ($(this).index() > 2 && $(this).index() < 8) {
+						var title = $('#myactive thead th').eq( $(this).index()+1 ).text();
+						$(this).html("<input data-toggle='tooltip' class='tip-bottom' type='text' title='Search for "+ title + "s here' placeholder='" + title + " Search' />" );
+					}
+					else
+					{
+						$(this).html('&nbsp;' );
+					}
+				} );
+
+				//prevents form submissions if press ENTER in textbox
+				//$(window).keydown(function (event) {
+				//	if (event.keyCode == 13)
+				//	 {
+				//		event.preventDefault();
+				//		return false;
+				//	}
+				//});
+
+				editor = new $.fn.dataTable.Editor( {
+					ajax: {
+						type: 'POST', 
+						url: "../api/v1.0/HTML_GRID_EBAY-INV_API", 
+						dataType: "json", 
+						contentType: "application/x-www-form-urlencoded; charset=utf-8" //, 
+						//data: function ( d ) { 
+						//	return JSON.stringify( webEDITURL );
+						//}
+					}, 
+					table: "#myactive", 
+					//idSrc: "ID",
+					formOptions: {
+						bubble: {
+							title: true,
+							submitOnReturn: true, 
+							focus: 0, 
+							message: 'Click \'Update\' to make your changes take affect.'
+						}
+					}, 
+					fields: [ 
+						{
+							label: "PictureURL",
+							name: "PictureURL",
+							type: "readonly"
+						},
+						{
+							label: "SKU",
+							name: "SKU",
+							type: "readonly"
+						},
+						{
+							label: "ItemID",
+							name: "ItemID",
+							type: "readonly"
+						},
+						{
+							label: "Title",
+							name: "Title",
+							type: "text"
+						},
+						{
+							label: "Price",
+							name: "Price",
+							type: "readonly"
+						},
+						{
+							label: "Quantity",
+							name: "Quantity",
+							type: "readonly"
+						},
+						{
+							label: "Amazon",
+							name: "Amazon",
+							type: "readonly"
+						},
+						{
+							label: "eBay",
+							name: "eBay",
+							type: "text"
+						},
+						{
+							label: "Etsy",
+							name: "Etsy",
+							type: "readonly"
+						},
+						{
+							label: "DT_RowId",
+							name: "DT_RowId",
+							type: "readonly"
+						}
+					]
+				} );
+
+				var webURL = {
+					token: '{{app.config["EBAYTOKEN"]}}',
+					page: '200',
+					pagenum: '1'
+				};
+
+				var t = $('#myactive').DataTable( {
+					//"dom": '<"top"filpT<"clear">>rt<"bottom"<"clear">>',
+					//"dom": '<"#testdiv_1" "dynDiv_moveDiv" T><"clear">lfrtip<"clear spacer">T',
+					dom: 'ilf<"PageDIV" p><rt><"LengthDIVbot" l><"FilterDIVbot" f><"PageDIVbot" p>',
+					order: [5, 'desc'], 
+					processing: true, 
+					//scrollY: "550px",
+					language: { 
+						"sProcessing": "", 
+						//"<b>athering data...</b><br /><img src='./static/img/Preloader_8.gif' />", 
+						emptyTable:     "<span class='text-center'><b>No data currently available in table!!!</b></span>", 
+						info:           "Got a total of _TOTAL_ entries to show (_START_ to _END_)", 
+						//"sInfoEmpty":      "No entries to show", 
+						loadingRecords: "Please wait - loading...", 
+						zeroRecords:    "No records to display", 
+						aria: {
+							"SortDescending": " - click/return to sort descending", 
+							"SortAscending":  " - click/return to sort ascending"
+						}, 
+						paginate: {
+							"first":    "First", 
+							"last":     "Last", 
+							"next":     "Next", 
+							"previous": "Previous"
+						}
+					},
+					initComplete: function(){
+						$('#loadingDIV').hide();
+						$('#myactiveDIV').show();
+					}, 
+					ajax: {
+						type: 'POST', 
+						url: "../api/v1.0/JSON_EBAY-ACTIVE_API", 
+						dataType: "json", 
+						contentType: "application/json; charset=utf-8", 
+						data: function ( d ) { 
+							return JSON.stringify( webURL );
+						}
+					}, 
+					failure: function(errMsg)  {
+						alert(errMsg);
+					}, 
+					error:   function (result) {
+						alert(result.status + " " + result.statusText + " " + result.responseText);
+					}, 
+					columnDefs: [{targets: [0,1,2], orderable: false}],
+					columns: [
+						{ orderable:false, className: "text-center",  type: "html", searchable: false, width: "128px" },
+						{ orderable:false, className: "text-center",  type: "html", searchable: false, width: "90px" },
+						{ orderable:false, className: "text-center",  type: "html", searchable: false, width: "90px" },
+						{ orderable:true,  className: "text-center",  type: "html", searchable: true,  width: "90px" },
+						{ orderable:false, className: "text-center",  type: "html", searchable: false, width: "90px" },
+						{ orderable:true,  className: "text-center editable",  type: "html", searchable: true,  width: "90px" },
+						{ orderable:true,  className: "text-center",  type: "num",  searchable: true,  width: "90px" },
+						{ orderable:true,  className: "text-center",  type: "num",  searchable: true,  width: "90px" },
+						{ orderable:true,  className: "text-center",  type: "html", searchable: true,  width: "40px" },
+						{ orderable:true,  className: "text-center editable",  type: "html", searchable: true,  width: "40px" },
+						{ orderable:true,  className: "text-center",  type: "html", searchable: true,  width: "40px" }
+					],
+					columns: [ 
+						// { data: null, defaultContent: '', orderable: false },
+						{ data: null, "className": 'edit-control', "defaultContent": '' },
+						{ data: "Counters" , "defaultContent": '' }, 
+						{ data: "PictureURL", "render": function ( data, type, full, meta ) {
+							var a = data.split("|");
+							return '<a href="' + a[1] + '" target="about:blank"><img style="width:90px;height:90px;" src="'+a[0]+'" /></a>';
+							}
+						}, 
+						{ data: "SKU" , "defaultContent": '' }, 
+						{ data: "ItemID" , "defaultContent": '' }, 
+						{ data: "Title" , "className": 'edit-column', "defaultContent": '' }, 
+						//{ data: "Price" }, 
+						{ data: "Price", "render": function ( data, type, full, meta ) {
+							return formatCurrency(data); } 
+						}, 
+						{ data: "Quantity" , "defaultContent": '' }, 
+						{ data: "Amazon", "render": function ( data, type, full, meta ) {
+							if (data == "Yes")
+								return '<span style="color:green;">'+data+'</span>';
+							else if (data == -1)
+								return '<span style="color:orange;">NA</span>';
+							else
+								return '<span style="color:red;">'+data+'</span>';
+							}
+						}, 
+						{ data: "eBay", "className": 'edit-column', "render": function ( data, type, full, meta ) {
+							if (data > 0)
+								return '<span style="color:green;">'+data+'</span>';
+							else if (data == -1)
+								return '<span style="color:orange;">NA</span>';
+							else
+								return '<span style="color:red;">'+data+'</span>';
+							}
+						}, 
+						{ data: "Etsy", "render": function ( data, type, full, meta ) {
+							if (data > 0)
+								return '<span style="color:green;">'+data+'</span>';
+							else if (data == -1)
+								return '<span style="color:orange;">NA</span>';
+							else
+								return '<span style="color:red;">'+data+'</span>';
+							}
+						} 
+					],
+					lengthChange: true, 
+					pageLength: -1, 
+					lengthMenu: [ [10, 25, 50, 100, 150, -1], [10, 25, 50, 100, 150, "All"] ]
+				} );
+
+				// Add function to show and hide columns
+				$('a.toggle-vis').on( 'click', function (e) {
+					e.preventDefault();
+
+					// Get the column API object
+					var column = t.column( $(this).attr('data-column') );
+
+					// Toggle the visibility
+					column.visible( ! column.visible() );
+				} );
+
+				// Activate an inline edit on click of a table cell td:not(:first-child, :nth-child(5))
+				//$('#myactive').on('click', 'tbody td:not(:first-child)', 'editable', function (e) {
+				//$('#myactive').on('click', 'tbody td:not(:first-child, :nth-child(2), :nth-child(3), :nth-child(4), :nth-child(5), :nth-child(7), :nth-child(8), :nth-child(9), :nth-child(11))', function (e) {
+				//$('td.edit-column').on('click', function (e) {
+				$('#myactive').on('click', 'tbody td.edit-column', function (e) {
+					var tr = $(this).closest('tr');
+					//var itemid = tr.find('td:eq(7)').text();
+					var counter = tr.find('td:eq(1)').text();
+					//alert(editor.get("eBay"));
+					//var idx = tr.index();
+					//editor.val( 'Counter', counter );
+					//editor.val( 'ItemId', itemid );
+					
+					//alert(editor.get("ItemId"));
+					//editor.val( 'itemid', itemid );
+					//alert(editor.displayed()[0]);
+					// inline
+					editor.bubble( this, {
+						submitOnReturn:   false,
+						buttons: { label: '&nbsp;Update!&nbsp;', fn: function () { var x; if (confirm("SUBMIT " + editor.displayed()[0] + " UPDATE FOR ROW #" + counter + "?") == true) { $('#loadingDIV').show(); this.submit();} } }
+					} );
+				} );
+
+				editor.on('submitSuccess', function(e, json, data) {
+						//alert(json);
+						//alert(data);
+						$('#loadingDIV').hide();
+					} );
+
+				// Add event listener for click on edit button $('#myactive tbody')
+				$('#myactive tbody').on('click', 'tr td.edit-control', function () {
+
+					var tr = $(this).closest('tr');
+					var itemid = tr.find('td:eq(7)').text();
+					var idx = tr.index();
+					//alert('Row INDEX: ' + (idx+1) + "\nItemID: " + itemid);
+				//	alert("MYDATA:\nINDEX: " + idx  + "\n0. " + t.cell((idx+1), 7).data() + " \n1. " + t.cell(idx, 1).data() + "\n2. " + t.cell(idx, 2).data() + "\n3. " + 
+				//	t.cell(idx, 3).data() + "\n4. " + t.cell(idx, 4).data() + "\n5. " + t.cell(idx, 5).data() + "\n6. " + t.cell(idx, 6).data() + "\n7. " + t.cell(idx, 7).data())
+				//	alert(row1);
+				//	var cells = tr.first().data();  //text()
+					//alert("CELL:" + cells));
+				//	alert(cells[1]);
+				//	alert('Data:'+tr.html().trim());
+				//	alert('Row:'+tr.find('td').html().trim());
+				//	alert('Column:'+$('#myactive thead tr th').eq($(this).index()).html().trim());
+				//	var row = tr.text();//t.row( tr ).data();
+				//	alert(row);
+					//alert(row.position);
+					//var data = row.data();
+					//alert(data[3]);
+					//alert(data[7]);
+					//var rowData = row.data();
+					//alert('Row DATA: ' + rowData[4]);
+
+					window.location.href = "../myactiveedit?itemid=" + itemid; //"370927252175";
+
+				} );
+
+				// Add counter to column #1, Columns start at #0
+				t.on( 'order.dt search.dt', function () {
+					t.column(1, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+						cell.innerHTML = i+1;
+					} );
+				} ).draw();
+
+				// Apply the search to columns
+				t.columns().eq( 0 ).each( function ( colIdx ) {
+					var that = this;
+					$( 'input', t.column( colIdx ).footer() ).on( 'keyup change', function () {
+						that
+							.column( colIdx )
+							.search( this.value )
+							.draw();
+						} );
+				} );
+
+				$(".tip-top").tooltip({
+					placement : 'top'
+				});
+
+				$(".tip-right").tooltip({
+					placement : 'right'
+				});
+
+				$(".tip-bottom").tooltip({
+					placement : 'bottom'
+				});
+
+				$(".tip-left").tooltip({
+					placement : 'left'
+				});
+
+				$('#myactiveDIV').hide();
+			} ); /* End of Doc Ready */
+
+			//$('#myactive').on( 'click', 'tbody tr', function () {
+			//  window.location.href = $(this).attr('href');
+			//} );
+
+			/* inputs */
+			$('input, select, textarea').tooltip( { 
+				align: 'autoLeft',
+				trigger: {
+					show: 'focus',
+					hide: 'blur'
+				}
+			} );
+
+			function formatCurrency(num) {
+				if (isNaN(num))
+					num = "0";
+				num = num.toString().replace(/\$|\,/g, '');
+				if (isNaN(num))
+					num = "0";
+
+				sign = (num == (num = Math.abs(num)));
+				num = Math.floor(num * 100 + 0.50000000001);
+				cents = num % 100;
+				num = Math.floor(num / 100).toString();
+				if (cents < 10)
+					cents = "0" + cents;
+
+				for (var i = 0; i < Math.floor((num.length - (1 + i)) / 3); i++)
+
+				num = num.substring(0, num.length - (4 * i + 3)) + ',' + num.substring(num.length - (4 * i + 3));
+
+				return ((sign) ? '' : '-') + '$' + num + '.' + cents;
+			}
+
+		</script>
+	</body>
+</html>

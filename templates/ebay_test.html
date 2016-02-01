@@ -1,0 +1,141 @@
+<html>
+<head>
+	<title>eBay TEST Search Results</title>
+	<style type="text/css">body { font-family: arial,sans-serif;} </style>
+</head> 
+<body>
+<h1>eBay TEST Search Results</h1>
+<div id="results"></div>
+
+<script language="javascript">
+	var APPNAME				 = "Vcommerc-da4e-4e27-b665-4a7dc71d7749";
+	var OPERATION_NAME		 = "findItemsByKeywords";
+	var SERVICE_VERSION		 = "1.0.0";
+	var GLOBAL_ID			 = "EBAY-US";
+	var RESPONSE_DATA_FORMAT = "JSON";
+	var CALLBACK			 = "_cb_findItemsByKeywords";
+
+	var param_query    = getQueryParams(document.location.search);
+	var keywords       = "iphone 3g";
+	var entriesPerPage = 10;
+
+	if (document.location.search.length > 2)
+	{
+		if (param_query.search.length > 1)
+		{
+			keywords = param_query.search;
+		} //End of if
+
+		entriesPerPage	   = param_query.per;
+		if (!isNaN(param_query.per) && param_query.per > 10)
+		{
+			entriesPerPage = param_query.per;
+		} //End of if
+	}
+	// Define global variable for the URL filter
+	var urlfilter = "";
+	
+	// Create a JavaScript array of the item filters you want to use in your request
+	var filterarray = [
+	  {"name":"MaxPrice", "value":"25", "paramName":"Currency", "paramValue":"USD"},
+	  {"name":"FreeShippingOnly", "value":"true", "paramName":"", "paramValue":""},
+	  {"name":"ListingType", "value":["AuctionWithBIN", "FixedPrice", "StoreInventory"], "paramName":"", "paramValue":""},
+	  ];
+
+	var url = "http://svcs.ebay.com/services/search/FindingService/v1";
+	    url += "?OPERATION-NAME=" + OPERATION_NAME;
+	    url += "&SERVICE-VERSION=" + SERVICE_VERSION;
+	    url += "&SECURITY-APPNAME=" + APPNAME;
+	    url += "&GLOBAL-ID=" + GLOBAL_ID;
+	    url += "&RESPONSE-DATA-FORMAT=" + RESPONSE_DATA_FORMAT;
+	    url += "&callback=" + CALLBACK;
+	    url += "&REST-PAYLOAD";
+	    url += "&keywords=" + keywords;
+	    url += "&paginationInput.entriesPerPage="+ entriesPerPage;
+
+		// Submit the request 
+		s = document.createElement('script'); // create script element
+		s.src = url;
+		document.body.appendChild(s);
+
+
+	// Generates an indexed URL snippet from the array of item filters
+	function  buildURLArray() {
+	  // Iterate through each filter in the array
+	  for(var i=0; i<filterarray.length; i++) {
+	    //Index each item filter in filterarray
+	    var itemfilter = filterarray[i];
+	    // Iterate through each parameter in each item filter
+	    for(var index in itemfilter) {
+	      // Check to see if the paramter has a value (some don't)
+	      if (itemfilter[index] !== "") {
+	        if (itemfilter[index] instanceof Array) {
+	          for(var r=0; r<itemfilter[index].length; r++) {
+	          var value = itemfilter[index][r];
+	          urlfilter += "&itemFilter\(" + i + "\)." + index + "\(" + r + "\)=" + value ;
+	          }
+	        } 
+	        else {
+	          urlfilter += "&itemFilter\(" + i + "\)." + index + "=" + itemfilter[index];
+	        }
+	      }
+	    }
+	  }
+	}  // End buildURLArray() function
+
+	// Execute the function to build the URL filter
+	buildURLArray(filterarray);
+
+
+	// Parse the response and build an HTML table to display search results
+	function _cb_findItemsByKeywords(root)
+	{
+	  var items = root.findItemsByKeywordsResponse[0].searchResult[0].item || [];
+	  var html = [];
+	  
+	  var item     = "";
+	  var title    = "";
+	  var pic      = "";
+	  var viewitem = "";
+	  
+	  html.push('<table width="100%" border="1" cellspacing="0" cellpadding="3"><tbody>');
+	
+	  for (var i = 0; i < items.length; ++i)  
+	  {
+		  if (i == 0)
+		  {
+			  html.push('<tr><td style="text-align:center;font-weight: bold;background-color: rgb(153,102,153);">Picture</td><td style="text-align:center;font-weight: bold;background-color: rgb(153,102,153);">Description</td></tr>');
+		  } //End of if
+		  item    = items[i];
+		 title    = item.title;
+		 pic      = item.galleryURL;
+		 viewitem = item.viewItemURL;
+	
+		 if (null != title && null != viewitem)
+		 {
+			 html.push('<tr><td>' + '<img src="' + pic + '" border="0">' + '</td>' + 
+			 '<td><a href="' + viewitem + '" target="_blank">' + title + '</a></td></tr>');
+		 } //End of if
+	  } //End of for loop
+
+	  html.push('</tbody></table>');
+	  document.getElementById("results").innerHTML = html.join("");
+	} //End of _cb_findItemsByKeywords
+
+
+	  //Create name value pair for passed in parameters on url
+	function getQueryParams(qs) {
+	    qs = qs.split("+").join(" ");
+
+	    var params = {}, tokens,
+	        re = /[?&]?([^=]+)=([^&]*)/g;
+
+	    while (tokens = re.exec(qs)) {
+	        params[decodeURIComponent(tokens[1])]
+	            = decodeURIComponent(tokens[2]);
+	    }
+	    return params;
+	}
+</script>
+</body>
+</html>

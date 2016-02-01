@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="description" content="Login in VCOMMSYNC Crossroads">
+		<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+		<meta name="keywords" content="{{app.config["KEYWORDS"]}}">
+		<meta name="author" content="{{app.config["AUTHOR"]}}">
+		<title>{{app.config["TITLE"]}} | {{app.config["PAGETITLE"]}}</title>
+		<link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='img/favicon.ico')}}">
+		<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+		<!-- Bootstrap 3.3.2 -->
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css')}}" />
+		<!-- FontAwesome 4.3.0 -->
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+		<!-- Ionicons 2.0.0 -->
+		<link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+		<!-- DATA TABLES -->
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='plugins/datatables/dataTables.bootstrap.css')}}" />
+		<!-- Theme style -->
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='dist/css/AdminLTE.min.css')}}" />
+		<!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='dist/css/skins/_all-skins.min.css')}}" />
+
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='plugins/datatables/dataTables.tableTools.css')}}" />
+
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='plugins/datatables/editor.bootstrap.css')}}" />
+
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='plugins/byrei-dyndiv_0.5.css')}}" />
+		<script src="{{ url_for('static', filename='plugins/byrei-dyndiv_1.0rc1-src.js')}}"></script>
+		<style>
+			tfoot input {
+				width: 100%;
+				padding: 3px;
+				box-sizing: border-box;
+			}
+			tfoot { 
+					display: table-header-group; 
+			}
+			
+			.ToolButtonDIV {
+				 width: 296px;
+				 height: 42px;
+				 background: #ccc;
+				 border: 2px solid #aaa;
+				 padding:4px;
+				 top: -52px;
+				 left: 450px;
+				 position: absolute;
+			}
+
+			.PageDIV {
+				 top: 30px;
+				 height: 36px;
+				 /* background: #ccc;
+				 border: 1px solid #aaa; */
+				 padding:0px;
+				 left: 500px;
+				 position: absolute;
+			}
+			.PageDIVbot {
+				 bottom: -36px;
+				 height: 36px;
+				 /* background: #ccc;
+				 border: 1px solid #aaa; */
+				 padding:0px;
+				 left: 500px;
+				 position: absolute;
+			}
+
+			.FilterDIVbot {
+				 bottom: -36px;
+				 height: 32px;
+				 /* background: #ccc;
+				 border: 1px solid #aaa; */
+				 padding:0px;
+				 right: 0px;
+				 position: absolute;
+			}
+
+			.LengthDIVbot {
+				 bottom: -36px;
+				 height: 34px;
+				 /* background: #ccc;
+				 border: 1px solid #aaa; */
+				 padding:0px;
+				 left: 0px;
+				 position: absolute;
+			}
+		</style>
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body class="skin-blue">
+		<div class="wrapper">
+			<header class="main-header">
+				<!-- Logo -->
+				<a href="../index" class="logo"><i class="fa fa-crosshairs fa-2x" style="text-align: center;"></i> <b>{{app.config["TITLE"]}}</b></a>
+				<!-- Header Navbar: style can be found in header.less -->
+				<nav class="navbar navbar-static-top" role="navigation">
+					<!-- Sidebar toggle button-->
+					<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+						<span class="sr-only">Toggle navigation</span>
+					</a>
+					<div class="navbar-custom-menu">
+						<ul class="nav navbar-nav">
+
+							{% include 'notice_menu.html' %}
+
+							{% include 'user_menu.html' %}
+
+						</ul>
+					</div>
+				</nav>
+			</header>
+
+			{% include 'leftnav.html' %}
+
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<h1>
+						Summary of My Active Listings
+						<small>Dashboard</small>
+					</h1>
+
+					{% include 'breadcrumbs.html' %}
+
+				</section>
+
+				<!-- Main content -->
+				<section class="content">
+					<!-- Main row -->
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="box">
+								<!-- ><div class="box-header">
+									<h2 class="box-title">My Active Listings</h2>
+								</div> --><!-- /.box-header -->
+								<div id="tableDIV" class="box-body">
+									<!-- table table-striped table-bordered -->
+									<!-- <table id="myactive" class="display table table-bordered table-striped table-hover" cellspacing="0" width="100%"> -->
+									<table id="myactive"class="display table table-bordered table-striped table-hover table-condensed" cellspacing="0" width="100%">
+										<thead>
+											<tr>
+												<th></th>
+												<th>Picture</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>SKU</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>Title</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>Price</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>Total Quantity</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>ItemId</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>Amazon</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>eBay</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>Etsy</th>
+											</tr>
+										</thead>
+
+										<tfoot>
+											<tr>
+												<th></th>
+												<th>Picture</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>SKU</th>
+												<th data-toggle='toolti1p' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>Title</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>Price</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>Total Quantity</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>ItemId</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>Amazon</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>eBay</th>
+												<th data-toggle='tooltip1' class='tip-top1' title='Click Up arrow to Ascending sort, Down arrow to Descending sort'>Etsy</th>
+											</tr>
+										</tfoot>
+										<tbody>
+
+										</tbody>
+									</table>
+								</div><!-- /.box-body -->
+
+								{% include 'loadingDT.html' %}
+
+							</div><!-- /.box -->
+						</div><!-- /.col -->
+					</div><!-- /.row -->
+				</section><!-- /.content -->
+			</div><!-- /.content-wrapper -->
+
+			{% include 'footer.html' %}
+
+		</div><!-- ./wrapper -->
+		<!-- jQuery 2.1.3 -->
+		<script src="{{ url_for('static', filename='plugins/jQuery/jQuery-2.1.3.min.js')}}"></script>
+
+		<!-- jQuery UI 1.11.2 -->
+		<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.min.js" type="text/javascript"></script>
+		<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+		<script>
+			$.widget.bridge('uibutton', $.ui.button);
+		</script>
+		<!-- Bootstrap 3.3.2 JS -->
+		<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js')}}" type="text/javascript"></script>
+
+		<!-- DATA TABES SCRIPT -->
+		<script src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js" type="text/javascript"></script>
+
+		<script src="{{ url_for('static', filename='plugins/datatables/jquery.dataTables.js')}}" type="text/javascript"></script>
+
+		<script src="{{ url_for('static', filename='plugins/datatables/dataTables.bootstrap.js')}}" type="text/javascript"></script>
+
+		<script src="{{ url_for('static', filename='plugins/datatables/dataTables.tableTools.min.js')}}" type="text/javascript"></script>
+
+		<script src="{{ url_for('static', filename='plugins/datatables/dataTables.editor.min.js')}}" type="text/javascript"></script>
+
+		<!-- AdminLTE App -->
+		<script src="{{ url_for('static', filename='dist/js/app.min.js')}}" type="text/javascript"></script>
+
+		<!-- page script -->
+		<script type="text/javascript">
+			var editor;
+
+			$(document).ready(function() {
+				$('#tableDIV').hide();
+				var webURL = {
+					token: '{{app.config["EBAYTOKEN"]}}',
+					page: '200',
+					pagenum: '1'
+				};
+				
+				var webEDITURL = {
+					token: '{{app.config["EBAYTOKEN"]}}',
+					itemid: '370927252175'
+				};
+				
+				editor = new $.fn.dataTable.Editor( {
+						ajax: {
+							create: {
+								type: 'POST',
+								url:  '../php/rest/create.php'
+							},
+							edit: {
+								type: 'POST',
+								url:  '../api/v1.0/json_ebay_item_api',
+								dataType: "json",
+								contentType: "application/json; charset=utf-8",
+								data: function ( d ) { 
+									return JSON.stringify( webEDITURL );
+								}
+
+							},
+							remove: {
+								type: 'DELETE',
+								url:  '../php/rest/remove.php?id=_id_'
+							}
+						},
+						table: "#myactive",
+						fields: [ 
+							{ label: "Picture:",
+								name: "PictureURL"
+							},
+							{	label: "SKU:",
+								name: "SKU"
+							},
+							{ label: "Title:",
+								name: "Title"
+							},
+							{ label: "Price:",
+								name: "Price"
+							},
+							{ label: "Quantity:",
+								name: "Quantity"
+							},
+							{ label: "ItemID:",
+								name: "ItemID"
+							}]
+				} );
+
+
+				// Activate an inline edit on click of a table cell
+				$('#myactive').on( 'click', 'tbody td:not(:first-child)', function (e) {
+					editor.inline( this, {
+						buttons: { label: '&gt;', fn: function () { this.submit(); } }
+					} );
+				} );
+
+
+				var t = $('#myactive').DataTable( {
+					//"dom": '<"top"filpT<"clear">>rt<"bottom"<"clear">>',
+					//"dom": '<"#testdiv_1" "dynDiv_moveDiv" T><"clear">lfrtip<"clear spacer">T',
+					"dom": '<"ToolButtonDIV dynDiv_moveDiv" T>ilf<"PageDIV" p><rt><"LengthDIVbot" l><"FilterDIVbot" f><"PageDIVbot" p>',
+					"order": [[ 4, 'desc' ] ], 
+					"bProcessing":     true, 
+					"oLanguage": { 
+						//"sProcessing":     "<b>athering data...</b><br /><img src='./static/img/Preloader_8.gif' />", 
+						"sEmptyTable":     "<span class='text-center'><b>No data currently available in table!!!</b></span>", 
+						"sInfo":           "Got a total of _TOTAL_ entries to show (_START_ to _END_)", 
+						//"sInfoEmpty":      "No entries to show", 
+						"sLoadingRecords": "Please wait - loading...", 
+						"sZeroRecords":    "No records to display", 
+						"oAria": {
+							"sSortDescending": " - click/return to sort descending", 
+							"sSortAscending":  " - click/return to sort ascending"
+						}, 
+						"oPaginate": {
+							"sFirst":    "First page", 
+							"sLast":     "Last page", 
+							"sNext":     "Next page", 
+							"sPrevious": "Previous page"
+						}
+					},
+					"initComplete": function(){
+						$('#loadingDIV').hide();
+						$('#tableDIV').show();
+					}, 
+					ajax: {
+						type: 'POST', 
+						url: "../api/v1.0/JSON_EBAY-ACTIVE_API", 
+						dataType: "json", 
+						contentType: "application/json; charset=utf-8", 
+						data: function ( d ) { 
+							return JSON.stringify( webURL );
+						}
+					}, 
+					failure: function(errMsg)  {
+						alert(errMsg);
+					}, 
+					error:   function (result) {
+						alert(result.status + " " + result.statusText + " " + result.responseText);
+					}, 
+					"aoColumnDefs": [ 
+						{ "sClass": "text-center",  "aTargets": [0, 1, 2, 4, 5, 6, 7,8, 9 ] }, 
+						{ "sType": "numeric",       "aTargets": [ 4, 5 ] }, 
+						{ "sType": "html",          "aTargets": [0, 1, 2, 3, 6, 7, 8, 9 ] }, 
+						{ "bSearchable": false,     "aTargets": [ 0, 1 ] }, 
+						{ "bSortable": false,       "aTargets": [ 0, 1 ] }, 
+						{ "sWidth": "90px",         "aTargets": [ 1, 2, 5, 6 ] }, 
+						//{ "sWidth": "120px",        "aTargets": [ 3 ] }, 
+						{ "sWidth": "40px",         "aTargets": [ 0, 7, 8, 9 ] }, 
+						{ "orderable": false,       "targets": [ 0 ] }
+					], 
+					"lengthChange": true, 
+					"iDisplayLength": 50, 
+					"lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "All"] ], 
+					columns: [ 
+						// { data: null, defaultContent: '', orderable: false },
+						{ data: null }, 
+						{ data: "PictureURL", "render": function ( data, type, full, meta ) { 
+							return '<img style="width:90px;height:90px;" src="'+data+'" />';
+							}
+						}, 
+						{ data: "SKU" }, 
+						{ data: "Title" }, 
+						//{ data: "Price" }, 
+						{ data: "Price", "render": function ( data, type, full, meta ) {
+							return formatCurrency(data); } 
+						}, 
+						{ data: "Quantity" }, 
+						{ data: "ItemID" }, 
+						{ data: "Amazon", "render": function ( data, type, full, meta ) {
+							if (data == "Yes")
+								return '<span style="color:green;">'+data+'</span>';
+							else if (data == -1)
+								return '<span style="color:orange;">NA</span>';
+							else
+								return '<span style="color:red;">'+data+'</span>';
+							}
+						}, 
+						{ data: "eBay", "render": function ( data, type, full, meta ) {
+							if (data > 0)
+								return '<span style="color:green;">'+data+'</span>';
+							else if (data == -1)
+								return '<span style="color:orange;">NA</span>';
+							else
+								return '<span style="color:red;">'+data+'</span>';
+							}
+						}, 
+						{ data: "Etsy", "render": function ( data, type, full, meta ) {
+							if (data > 0)
+								return '<span style="color:green;">'+data+'</span>';
+							else if (data == -1)
+								return '<span style="color:orange;">NA</span>';
+							else
+								return '<span style="color:red;">'+data+'</span>';
+							}
+						} 
+					],
+					"oTableTools": {
+						//"sSwfPath" : "{{ url_for('.static', filename='swf/copy_cvs_xls_pdf.swf') }}", 
+						"sSwfPath" : "http://localhost:8080/static/swf/copy_cvs_xls_pdf.swf') }}", 
+						"sRowSelect": "multi", 
+						"aButtons": [
+							{ "sExtends": "editor_create", "editor": editor }, 
+							{ "sExtends": "editor_edit",   "editor": editor },
+							{ "sExtends": "editor_remove", "editor": editor }, 
+							"copy", 
+							//{ "sExtends": "editor_remove", "editor": editor }, 
+							{
+								"sExtends":    "collection",
+								"sButtonText": "Save",
+								"aButtons":    [ "csv", "xls", "pdf" ]
+							}, 
+							"print", 
+						]
+					}
+				} );
+
+				t.on( 'order.dt search.dt', function () {
+					t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+						cell.innerHTML = i+1;
+					} );
+				} ).draw();
+
+				// Setup - add a text input to each footer cell
+				$('#myactive tfoot th').each( function () {
+					if ($(this).index() > 1 && $(this).index() < 7) {
+						var title = $('#myactive thead th').eq( $(this).index() ).text();
+						$(this).html("<input data-toggle='tooltip' class='tip-bottom' type='text' title='Search for "+ title + "s here' placeholder='" + title + " Search' />" );
+					}
+					else
+					{
+						$(this).html('&nbsp;' );
+					}
+				} );
+
+				// Apply the search
+				t.columns().eq( 0 ).each( function ( colIdx ) {
+					$( 'input', t.column( colIdx ).footer() ).on( 'keyup change', function () {
+						t
+							.column( colIdx )
+							.search( this.value )
+							.draw();
+						} );
+				} );
+				
+				
+				$(".tip-top").tooltip({
+					placement : 'top'
+				});
+				$(".tip-right").tooltip({
+					placement : 'right'
+				});
+				$(".tip-bottom").tooltip({
+					placement : 'bottom'
+				});
+				$(".tip-left").tooltip({
+					placement : 'left'
+				});
+				
+			} );
+			
+			/* inputs */
+			$('input, select, textarea').tooltip( { 
+				align: 'autoLeft',
+				trigger: {
+					show: 'focus',
+					hide: 'blur'
+				}
+			} );
+
+			function formatCurrency(num) {
+				num = num.toString().replace(/\$|\,/g, '');
+				if (isNaN(num))
+					num = "0";
+
+				sign = (num == (num = Math.abs(num)));
+				num = Math.floor(num * 100 + 0.50000000001);
+				cents = num % 100;
+				num = Math.floor(num / 100).toString();
+				if (cents < 10)
+					cents = "0" + cents;
+
+				for (var i = 0; i < Math.floor((num.length - (1 + i)) / 3); i++)
+
+				num = num.substring(0, num.length - (4 * i + 3)) + ',' + num.substring(num.length - (4 * i + 3));
+
+				return ((sign) ? '' : '-') + '$' + num + '.' + cents;
+			}
+
+		</script>
+	</body>
+</html>

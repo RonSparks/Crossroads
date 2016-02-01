@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="description" content="Login in VCOMMSYNC Crossroads">
+		<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+		<meta name="keywords" content="{{app.config["KEYWORDS"]}}">
+		<meta name="author" content="{{app.config["AUTHOR"]}}">
+		<title>{{app.config["TITLE"]}} | {{app.config["PAGETITLE"]}}</title>
+		<link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='img/favicon.ico')}}">
+		<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+		<!-- Bootstrap 3.3.2 -->
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css')}}" />
+		<!-- FontAwesome 4.3.0 -->
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+		<!-- Ionicons 2.0.0 -->
+		<link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+		<!-- Theme style -->
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='dist/css/AdminLTE.min.css')}}" />
+		<!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='dist/css/skins/_all-skins.min.css')}}" />
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='plugins/byrei-dyndiv_0.5.css')}}" />
+		<script src="{{ url_for('static', filename='plugins/byrei-dyndiv_1.0rc1-src.js')}}"></script>
+		<style>
+		/* Contact form */
+		form label {
+		  font-size: 1.2em;
+		  font-weight: bold;
+		  /* display: block; */
+		  padding: 10px 0;
+		}
+
+		form input#name,
+		form input#email,
+		form input#subject {
+		  width: 400px;
+		  background-color: #fafafa;
+		  -webkit-border-radius: 3px;
+			 -moz-border-radius: 3px;
+				  border-radius: 3px;
+		  border: 1px solid #cccccc;
+		  padding: 5px;
+		  font-size: 1.1em;
+		}
+		form textarea#message {
+		  width: 500px;
+		  height: 100px;
+		  background-color: #fafafa;
+		  -webkit-border-radius: 3px;
+			 -moz-border-radius: 3px;
+				  border-radius: 3px;
+		  border: 1px solid #cccccc;
+		  margin-bottom: 10px;
+		  padding: 5px;
+		  font-size: 1.1em;
+		}
+		form input#submit {
+		  display: block;
+		  -webkit-border-radius: 3px; 
+			 -moz-border-radius: 3px;
+				  border-radius: 3px;
+		  border:1px solid #d8d8d8;
+		  padding: 10px; 
+		  font-weight:bold; 
+		  text-align: center; 
+		  color: #000000; 
+		  background-color: #f4f4f4;
+		  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f4f4f4), color-stop(100%, #e5e5e5));
+		  background-image: -webkit-linear-gradient(top, #f4f4f4, #e5e5e5);
+		  background-image: -moz-linear-gradient(top, #f4f4f4, #e5e5e5);
+		  background-image: -ms-linear-gradient(top, #f4f4f4, #e5e5e5);
+		  background-image: -o-linear-gradient(top, #f4f4f4, #e5e5e5);
+		  background-image: linear-gradient(top, #f4f4f4, #e5e5e5);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#f4f4f4, endColorstr=#e5e5e5);
+		}
+		form input#submit:hover{
+		  cursor: pointer;
+		  border:1px solid #c1c1c1; 
+		  background-color: #dbdbdb;
+		  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dbdbdb), color-stop(100%, #cccccc));
+		  background-image: -webkit-linear-gradient(top, #dbdbdb, #cccccc);
+		  background-image: -moz-linear-gradient(top, #dbdbdb, #cccccc);
+		  background-image: -ms-linear-gradient(top, #dbdbdb, #cccccc);
+		  background-image: -o-linear-gradient(top, #dbdbdb, #cccccc);
+		  background-image: linear-gradient(top, #dbdbdb, #cccccc);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#dbdbdb, endColorstr=#cccccc);
+		}
+
+		/* Message flashing */
+		.flash {
+		  background-color: #FBB0B0;
+		  padding: 10px;
+		  width: 400px;
+		}
+	
+		hr {
+		    display: block;
+		    margin-top: 0.5em;
+		    margin-bottom: 0.5em;
+		    margin-left: auto;
+		    margin-right: auto;
+		    border-style: inset;
+		    border-width: 1px;
+			width:90%;
+		}
+
+		.d1 {
+			height: 640px;
+		}
+		.d2 {
+			height: 260px; 
+		}
+		.d3 {
+			height:100%; 
+		}
+		.d3-1 {
+			height:260px;
+		}
+		.d3-2{
+			/* max-height: 100%; */
+			height:375px;
+			background-color:#CCCCB2;
+			overflow: auto;
+		}
+		.d4 {
+			height:2100px;
+		}
+
+		.d1{
+			/* border:1px solid black; */
+		}
+		.d2{
+			border-radius: 25px;
+			border: 2px solid #000000; /* #8AC007; */
+		}
+		.d3-1{
+			/* border:2px solid yellow; */
+		}
+		.d3-2{
+			border:2px solid black;
+		}
+		.d4{
+			/* #border:2px solid blue; */
+		}
+
+		</style>
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body class="skin-blue">
+		<div class="wrapper">
+			<header class="main-header">
+				<!-- Logo -->
+				<a href="index" class="logo"><i class="fa fa-crosshairs fa-2x" style="text-align: center;"></i> <b>{{app.config["TITLE"]}}</b></a>
+				<!-- Header Navbar: style can be found in header.less -->
+				<nav class="navbar navbar-static-top" role="navigation">
+					<!-- Sidebar toggle button-->
+					<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+						<span class="sr-only">Toggle navigation</span>
+					</a>
+					<div class="navbar-custom-menu">
+						<ul class="nav navbar-nav">
+
+							{% include 'notice_menu.html' %}
+
+							{% include 'user_menu.html' %}
+
+						</ul>
+					</div>
+				</nav>
+			</header>
+
+			{% include 'leftnav.html' %}
+
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<h1>
+						{{app.config["PAGETITLE"]}}
+						<small>Dashboard</small>
+					</h1>
+
+					{% include 'breadcrumbs.html' %}
+
+				</section>
+
+				<!-- Main content -->
+				<section class="content">
+					<!-- Main row -->
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="box">
+								<!-- ><div class="box-header">
+									<h2 class="box-title">My Active Listings</h2>
+								</div> --><!-- /.box-header -->
+									<div id="MainDIV" class="box-body">
+										<!-- LISTDATA: {{listdata}} -->
+										<form id='form' action="{{ url_for('myactiveedit') }}" method="post">
+										{{ form.hidden_tag() }}
+
+										<!-- Custom Tabs -->
+										<div class="nav-tabs-custom">
+											<ul class="nav nav-tabs">
+												<li class="pull-left header"><i class="fa fa-th"></i>Ebay Item</li>
+												<li class="active"><a href="#tab_1" id="link_tab1" data-toggle="tab">Editable</a></li>
+												<li><a href="#tab_2" id="link_tab2" data-toggle="tab">List Details Data</a></li>
+												<li><a href="#tab_3" id="link_tab3" data-toggle="tab">ITEM STATUS</a></li>
+												<li class="dropdown">
+													<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+														Dropdown Test <span class="caret"></span></a>
+													<ul class="dropdown-menu">
+														<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+														<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+														<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+														<li role="presentation" class="divider"></li>
+														<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+													</ul>
+												</li>
+												<li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
+											</ul>
+											<div class="tab-content">
+
+												<div class="tab-pane active" id="tab_1" style="height:600px;">
+
+													<div class="d1">
+														<div class="d2">
+															<div class="d3">
+																<div class="d3-1">
+
+																	<section>
+																		<table style="width:100%;height:100%;">
+																		<tr>
+																			<td colspan="2"><h1>Item Data</h1>
+																				<h7 class="strong" style="text-align:center;"><sup style="color:red;">*</sup> Items in "red" can be changed</h7></td>
+																			<td rowspan="5" style="text-align:center;vetical-align:top;font-weight:bold;"><a href="" id="itemlink" target="_blank">see item page in Ebay<br />
+																				<img id="itempic" src="" style="border-style: solid; border-width: medium;" /></a><br>
+																				True image size: <span id="img_width"></span>px x <span id="img_height"></span>px</td>
+																		</tr>
+																		<tr>
+																			<td style="text-align:left;"><label>Item Data Received:</label>{{ form.Timestamp(size=25, maxlength=30, style='background-color:#FCF5D8', readonly="readonly") }}</td>
+																			<td style="text-align:left;"><label>Ebay Item ID:</label>{{ form.ItemId(size=20, maxlength=30, style='background-color:#FCF5D8', readonly="readonly") }}</td>
+																		</tr>
+																		<tr>
+																			<td colspan="2"><span style="color:red;">{{ form.Title.label }}:</span>		{{ form.Title(size=80, maxlength=80) }}</td>
+																		</tr>
+																		<tr>
+																			<td colspan="2"><span style="color:red;">{{ form.Quantity.label }}:</span>	{{ form.Quantity(size=5, maxlength=5) }}</td>
+																		</tr>
+																		</table>
+																	</section>
+																</div>
+																<div class="d3-2">
+																	<div class="d4">
+
+																		<section>
+																			<h4>StartPrice Data</h4>
+																			<span style="color:red;">{{ form.StartPrice_currencyID.label }}:</span>		{{ form.StartPrice_currencyID(size=1) }}</br>
+																			<span style="color:red;">{{ form.StartPrice_text.label }}:</span>			{{ form.StartPrice_text(size=10, maxlength=16) }}</br>
+
+																			<hr>
+																			<h4>BuyItNowPrice Data</h4>
+																			<span style="color:red;">{{ form.BuyItNowPrice_currencyID.label }}:</span>	{{ form.BuyItNowPrice_currencyID(size=1) }}</br>
+
+																			<span style="color:red;">{{ form.BuyItNowPrice_text.label }}:</span>		{{ form.BuyItNowPrice_text(size=10, maxlength=16) }}</br>
+
+																			<hr>
+																			<h4>ReservePrice Data</h4>
+																			<span style="color:red;">{{ form.ReservePrice_currencyID.label }}:</span>	{{ form.ReservePrice_currencyID(size=1) }}</br>
+																			<span style="color:red;">{{ form.ReservePrice_text.label }}:</span>			{{ form.ReservePrice_text(size=10, maxlength=16) }}</br>
+
+																			<span style="color:red;">{{ form.Country.label }}:</span>					{{ form.Country(size=1) }}</br>
+
+																			<h4>CalculatedShippingRate Data</h4>
+
+																			<span style="color:red;">{{ form.CalculatedShippingRate_OriginatingPostalCode.label }}:</span>		{{ form.CalculatedShippingRate_OriginatingPostalCode(size=20, maxlength=25) }}</br>
+
+																			<hr>
+
+																			<span style="color:red;">{{ form.HitCounter.label }}:</span>				{{ form.HitCounter(size=1) }}</br>
+
+																			<span style="color:red;">{{ form.AutoPay.label }}:</span>					{{ form.AutoPay() }}</br>
+
+																			<hr>
+
+																			<h4>PictureDetails Data</h4>
+																			{{ form.PictureDetails_GalleryType.label }}:								{{ form.PictureDetails_GalleryType(size=30, maxlength=50, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+																			{{ form.PictureDetails_GalleryURL.label }}:									{{ form.PictureDetails_GalleryURL(size=30, maxlength=50, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+																			{{ form.PictureDetails_PhotoDisplay.label }}:								{{ form.PictureDetails_PhotoDisplay(size=30, maxlength=50) }}</br>
+
+																			<h5>PictureURL Data</h5>
+
+																			{{ form.PictureDetails_PictureURL.label }}:									{{ form.PictureDetails_PictureURL(rows=5, cols=70) }}</br>
+
+																			<hr>
+
+																			{{ form.AppData.label }}:													{{ form.AppData(size=10, maxlength=25, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+
+																			{{ form.BuyerProtection.label }}:											{{ form.BuyerProtection(size=30, maxlength=50, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+
+																			{{ form.Currency.label }}:													{{ form.Currency(size=5, maxlength=5, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+																			{{ form.GiftIcon.label }}:													{{ form.GiftIcon(size=3, maxlength=3, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+
+																			{{ form.PrivateListing.label }}:											{{ form.PrivateListing() }}</br>
+
+																			<hr>
+
+																			<h4>ConvertedStartPrice Data</h4>
+
+																			{{ form.LDConvertedStartPrice_currencyID.label }}:							{{ form.LDConvertedStartPrice_currencyID(size=5, maxlength=10, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+																			{{ form.LDConvertedStartPrice_text.label }}:								{{ form.LDConvertedStartPrice_text(size=10, maxlength=16, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+
+																			<hr>
+
+																			<h4>CurrentPrice Data </h4>
+																			{{ form.CurrentPrice_currencyID.label }}:									{{ form.CurrentPrice_currencyID(size=5, maxlength=10, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+																			{{ form.CurrentPrice_text.label }}:											{{ form.CurrentPrice_text(size=10, maxlength=16, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+
+																			<h4>ConvertedCurrentPrice Data </h4>
+
+																			{{ form.ConvertedCurrentPrice_currencyID.label }}:							{{ form.ConvertedCurrentPrice_currencyID(size=5, maxlength=10, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+																			{{ form.ConvertedCurrentPrice_text.label }}:								{{ form.ConvertedCurrentPrice_text(size=10, maxlength=16, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+
+																			<hr>
+
+																			<h4>ConvertedBuyItNowPrice Data</h4>
+
+																			{{ form.LDConvertedBuyItNowPrice_currencyID.label }}:						{{ form.LDConvertedBuyItNowPrice_currencyID(size=5, maxlength=10, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+																			{{ form.LDConvertedBuyItNowPrice_text.label }}:								{{ form.LDConvertedBuyItNowPrice_text(size=10, maxlength=16, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+
+																			<hr>
+
+																			<h4>ConvertedReservePrice Data</h4>
+
+																			{{ form.LDConvertedReservePrice_currencyID.label }}:						{{ form.LDConvertedReservePrice_currencyID(size=5, maxlength=10, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+																			{{ form.LDConvertedReservePrice_text.label }}:								{{ form.LDConvertedReservePrice_text(size=10, maxlength=16, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+																			<span style="text-align:center;">{{ form.submit }}</span>
+																		</section>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+
+												</div><!-- /.tab-pane -->
+												
+												<div class="tab-pane" id="tab_2">
+													<h3>ListingDetails Data</h3>
+													<section>
+														{{ form.ListingDetails_Adult.label }}:								{{ form.ListingDetails_Adult() }}</br>
+														{{ form.ListingDetails_BindingAuction.label }}:						{{ form.ListingDetails_BindingAuction() }}</br>
+														{{ form.ListingDetails_CheckoutEnabled.label }}:						{{ form.ListingDetails_CheckoutEnabled() }}</br>
+
+														{{ form.ListingDetails_HasReservePrice.label }}:						{{ form.ListingDetails_HasReservePrice() }}</br>
+														{{ form.ListingDetails_StartTime.label }}:							{{ form.ListingDetails_StartTime(size=30, maxlength=35, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+														{{ form.ListingDetails_EndTime.label }}:								{{ form.ListingDetails_EndTime(size=30, maxlength=35, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+														{{ form.ListingDetails_ViewItemURL.label }}:							{{ form.ListingDetails_ViewItemURL(size=80, maxlength=2048, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+														{{ form.ListingDetails_HasUnansweredQuestions.label }}:				{{ form.ListingDetails_HasUnansweredQuestions(size=30, maxlength=50) }}</br>
+														{{ form.ListingDetails_HasPublicMessages.label }}:					{{ form.ListingDetails_HasPublicMessages(size=30, maxlength=50) }}</br>
+														{{ form.ListingDetails_ViewItemURLForNaturalSearch.label }}:			{{ form.ListingDetails_ViewItemURLForNaturalSearch(size=80, maxlength=2048, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+
+														{{ form.ListingDuration.label }}:									{{ form.ListingDuration(size=30, maxlength=50) }}</br>
+														{{ form.ListingType.label }}:										{{ form.ListingType(size=50, maxlength=100) }}</br>
+														{{ form.Location.label }}:											{{ form.Location(size=30, maxlength=50) }}</br>
+														{{ form.PaymentMethods.label }}:										{{ form.PaymentMethods(size=50, maxlength=100) }}</br>
+														{{ form.PayPalEmailAddress.label }}:									{{ form.PayPalEmailAddress(size=50, maxlength=150) }}</br>
+														<hr>
+														<h4>PrimaryCategory Data</h4>
+														{{ form.PrimaryCategory_CategoryID.label }}:							{{ form.PrimaryCategory_CategoryID(size=10, maxlength=30) }}</br>
+														{{ form.PrimaryCategory_CategoryName.label }}:						{{ form.PrimaryCategory_CategoryName(size=100, maxlength=250) }}</br>
+
+														<hr>
+														<h4>ReviseStatus Data</h4>
+														{{ form.ReviseStatus_ItemRevised.label }}:							{{ form.ReviseStatus_ItemRevised() }}</br>
+														<hr>
+														<h4>Seller Data</h4>
+														{{ form.Seller_AboutMePage.label }}:									{{ form.Seller_AboutMePage() }}</br>
+														{{ form.Seller_Email.label }}:										{{ form.Seller_Email(size=50, maxlength=250, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+														{{ form.Seller_FeedbackScore.label }}:								{{ form.Seller_FeedbackScore(size=10, maxlength=15, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+														{{ form.Seller_PositiveFeedbackPercent.label }}:						{{ form.Seller_PositiveFeedbackPercent(size=30, maxlength=50, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+														{{ form.Seller_FeedbackPrivate.label }}:								{{ form.Seller_FeedbackPrivate() }}</br>
+														{{ form.Seller_FeedbackRatingStar.label }}:							{{ form.Seller_FeedbackRatingStar(size=10, maxlength=15, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+														{{ form.Seller_IDVerified.label }}:									{{ form.Seller_IDVerified() }}</br>
+														{{ form.Seller_eBayGoodStanding.label }}:							{{ form.Seller_eBayGoodStanding() }}</br>
+														{{ form.Seller_NewUser.label }}:										{{ form.Seller_NewUser() }}</br>
+														{{ form.Seller_RegistrationDate.label }}:							{{ form.Seller_RegistrationDate(size=50, maxlength=100, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+														{{ form.Seller_Site.label }}:										{{ form.Seller_Site(size=10, maxlength=16) }}</br>
+														{{ form.Seller_Status.label }}:										{{ form.Seller_Status(size=15, maxlength=25) }}</br>
+														{{ form.Seller_UserID.label }}:										{{ form.Seller_UserID(size=25, maxlength=30, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+														{{ form.Seller_UserIDChanged.label }}:								{{ form.Seller_UserIDChanged() }}</br>
+														{{ form.Seller_UserIDLastChanged.label }}:							{{ form.Seller_UserIDLastChanged(size=15, maxlength=30) }}</br>
+														{{ form.Seller_VATStatus.label }}:									{{ form.Seller_VATStatus(size=15, maxlength=30) }}</br>
+
+														<h5>SellerInfo Data</h5>
+
+														{{ form.SSellerInfo_AllowPaymentEdit.label }}:						{{ form.SSellerInfo_AllowPaymentEdit(size=30, maxlength=50) }}</br>
+														{{ form.SSellerInfo_CheckoutEnabled.label }}:						{{ form.SSellerInfo_CheckoutEnabled(size=30, maxlength=50) }}</br>
+														{{ form.SSellerInfo_CIPBankAccountStored.label }}:					{{ form.SSellerInfo_CIPBankAccountStored(size=30, maxlength=50) }}</br>
+														{{ form.SSellerInfo_GoodStanding.label }}:							{{ form.SSellerInfo_GoodStanding(size=30, maxlength=50) }}</br>
+														{{ form.SSellerInfo_LiveAuctionAuthorized.label }}:					{{ form.SSellerInfo_LiveAuctionAuthorized(size=30, maxlength=50) }}</br>
+														{{ form.SSellerInfo_MerchandizingPref.label }}:						{{ form.SSellerInfo_MerchandizingPref(size=30, maxlength=50) }}</br>
+														{{ form.SSellerInfo_QualifiesForB2BVAT.label }}:						{{ form.SSellerInfo_QualifiesForB2BVAT(size=30, maxlength=50) }}</br>
+														{{ form.SSellerInfo_SellerLevel.label }}:							{{ form.SSellerInfo_SellerLevel(size=30, maxlength=50) }}</br>
+														{{ form.SSellerInfo_StoreOwner.label }}:								{{ form.SSellerInfo_StoreOwner(size=30, maxlength=50) }}</br>
+														{{ form.SSellerInfo_StoreURL.label }}:								{{ form.SSellerInfo_StoreURL(size=30, maxlength=50) }}</br>
+														{{ form.SSellerInfo_SafePaymentExempt.label }}:						{{ form.SSellerInfo_SafePaymentExempt(size=30, maxlength=50) }}</br>
+
+														{{ form.Seller_MotorsDealer.label }}:								{{ form.Seller_MotorsDealer(size=30, maxlength=50) }}</br>
+														<hr>
+														<h4>SellingStatus Data</h4>
+														{{ form.SellingStatus_BidCount.label }}:								{{ form.SellingStatus_BidCount(size=30, maxlength=50) }}</br>
+
+														<h5>BidIncrement Data</h5>
+
+														{{ form.BidIncrement_currencyID.label }}:							{{ form.BidIncrement_currencyID(size=1) }}</br>
+														{{ form.BidIncrement_text.label }}:									{{ form.BidIncrement_text(size=30, maxlength=50) }}</br>
+
+														{{ form.SellingStatus_LeadCount.label }}:							{{ form.SellingStatus_LeadCount(size=30, maxlength=50) }}</br>
+
+														<h5>MinimumToBid Data </h5>
+
+														{{ form.MinimumToBid_currencyID.label }}:							{{ form.MinimumToBid_currencyID(size=1) }}</br>
+														{{ form.MinimumToBid_text.label }}:									{{ form.MinimumToBid_text(size=30, maxlength=50) }}</br>
+
+														{{ form.SellingStatus_QuantitySold.label }}:							{{ form.SellingStatus_QuantitySold(size=30, maxlength=50) }}</br>
+														{{ form.SellingStatus_ReserveMet.label }}:							{{ form.SellingStatus_ReserveMet(size=30, maxlength=50) }}</br>
+														{{ form.SellingStatus_SecondChanceEligible.label }}:					{{ form.SellingStatus_SecondChanceEligible(size=30, maxlength=50) }}</br>
+														{{ form.SellingStatus_ListingStatus.label }}:						{{ form.SellingStatus_ListingStatus(size=30, maxlength=50) }}</br>
+
+														{{ form.SellingStatus_QuantitySoldByPickupInStore.label }}:			{{ form.SellingStatus_QuantitySoldByPickupInStore(size=30, maxlength=50) }}</br>
+														<hr>
+														<h4>ShippingDetails Data</h4>
+														{{ form.ShippingDetails_ApplyShippingDiscount.label }}:				{{ form.ShippingDetails_ApplyShippingDiscount(size=30, maxlength=50) }}</br>
+
+
+														<h6>PackageDepth Data</h6>
+														{{ form.CSRPackageDepth_measurementSystem.label }}:					{{ form.CSRPackageDepth_measurementSystem(size=30, maxlength=50) }}</br>
+														{{ form.CSRPackageDepth_unit.label }}:								{{ form.CSRPackageDepth_unit(size=30, maxlength=50) }}</br>
+														{{ form.CSRPackageDepth_text.label }}:								{{ form.CSRPackageDepth_text(size=30, maxlength=50) }}</br>
+
+														<h6>PackageLength Data</h6>
+														{{ form.CSRPackageLength_measurementSystem.label }}:					{{ form.CSRPackageLength_measurementSystem(size=30, maxlength=50) }}</br>
+														{{ form.CSRPackageLength_unit.label }}:								{{ form.CSRPackageLength_unit(size=30, maxlength=50) }}</br>
+														{{ form.CSRPackageLength_text.label }}:								{{ form.CSRPackageLength_text(size=30, maxlength=50) }}</br>
+
+														<h6>PackageWidth Data</h6>
+														{{ form.CSRPackageWidth_measurementSystem.label }}:					{{ form.CSRPackageWidth_measurementSystem(size=30, maxlength=50) }}</br>
+														{{ form.CSRPackageWidth_unit.label }}:								{{ form.CSRPackageWidth_unit(size=30, maxlength=50) }}</br>
+														{{ form.CSRPackageWidth_text.label }}:								{{ form.CSRPackageWidth_text(size=30, maxlength=50) }}</br>
+
+														<h6>PackageHandlingCosts Data</h6>
+														{{ form.CSRPackageHandlingCosts_currencyID.label }}:					{{ form.CSRPackageHandlingCosts_currencyID(size=1) }} </br>
+														{{ form.CSRPackageHandlingCosts_text.label }}:						{{ form.CSRPackageHandlingCosts_text(size=30, maxlength=50) }}</br>
+
+														{{ form.CalculatedShippingRate_ShippingIrregular.label }}:			{{ form.CalculatedShippingRate_ShippingIrregular(size=30, maxlength=50) }}</br>
+														{{ form.CalculatedShippingRate_ShippingPackage.label }}:				{{ form.CalculatedShippingRate_ShippingPackage(size=30, maxlength=50) }}</br>
+
+														<h6>WeightMajorData Data</h6>
+														{{ form.CSRWeightMajor_measurementSystem.label }}:					{{ form.CSRWeightMajor_measurementSystem(size=30, maxlength=50) }}</br>
+														{{ form.CSRWeightMajor_unit.label }}:								{{ form.CSRWeightMajor_unit(size=30, maxlength=50) }}</br>
+														{{ form.CSRWeightMajor_text.label }}:								{{ form.CSRWeightMajor_text(size=30, maxlength=50) }}</br>
+
+														<h6>WeightMinor Data</h6>
+														{{ form.CSRWeightMinor_measurementSystem.label }}:					{{ form.CSRWeightMinor_measurementSystem(size=30, maxlength=50) }}</br>
+														{{ form.CSRWeightMinor_unit.label }}:								{{ form.CSRWeightMinor_unit(size=30, maxlength=50) }}</br>
+														{{ form.CSRWeightMinor_text.label }}:								{{ form.CSRWeightMinor_text(size=30, maxlength=50) }}</br>
+
+														{{ form.SDInsuranceOption.label }}:									{{ form.SDInsuranceOption(size=30, maxlength=50) }}</br>
+														<hr>
+														<h4>InsuranceFee Data</h4>
+														{{ form.InsuranceFee_currencyID.label }}:							{{ form.InsuranceFee_currencyID(size=1) }}</br>
+														{{ form.InsuranceFee_text.label }}:									{{ form.InsuranceFee_text(size=30, maxlength=50) }}</br>
+
+														<h5>SalesTax Data</h5>
+
+														{{ form.SalesTax_SalesTaxPercent.label }}:							{{ form.SalesTax_SalesTaxPercent(size=30, maxlength=50) }}</br>
+														{{ form.SalesTax_ShippingIncludedInTax.label }}:						{{ form.SalesTax_ShippingIncludedInTax(size=30, maxlength=50) }}</br>
+
+														<h5>ShippingServiceOptions Data</h5>
+
+														{{ form.ShippingService.label }}:									{{ form.ShippingService(size=30, maxlength=50) }}</br>
+
+														<h6>ShippingServiceCost Data</h6>
+														{{ form.SSOShippingServiceCost_currencyID.label }}:					{{ form.SSOShippingServiceCost_currencyID(size=1) }}</br>
+														{{ form.SSOShippingServiceCost_text.label }}:						{{ form.SSOShippingServiceCost_text(size=30, maxlength=50) }}</br>
+
+														{{ form.ShippingServiceOptions_ShippingService.label }}:				{{ form.ShippingServiceOptions_ShippingService(size=30, maxlength=50) }}</br>
+														{{ form.ShippingServiceOptions_ShippingServicePriority.label }}:		{{ form.ShippingServiceOptions_ShippingServicePriority(size=30, maxlength=50) }}</br>
+														{{ form.ShippingServiceOptions_ExpeditedService.label }}:			{{ form.ShippingServiceOptions_ExpeditedService(size=30, maxlength=50) }}</br>
+														{{ form.ShippingServiceOptions_ShippingTimeMin.label }}:				{{ form.ShippingServiceOptions_ShippingTimeMin(size=30, maxlength=50) }}</br>
+														{{ form.ShippingServiceOptions_ShippingTimeMax.label }}:				{{ form.ShippingServiceOptions_ShippingTimeMax(size=30, maxlength=50) }}</br>
+														{{ form.ShippingServiceOptions_FreeShipping.label }}:				{{ form.ShippingServiceOptions_FreeShipping(size=30, maxlength=50) }}</br>
+
+														<h5>InternationalShippingServiceOption Data</h5>
+
+														{{ form.IntShippingServiceOption_ShippingService.label }}:			{{ form.IntShippingServiceOption_ShippingService(size=30, maxlength=50) }}</br>
+														{{ form.IntShippingServiceOption_ShippingServicePriority.label }}:	{{ form.IntShippingServiceOption_ShippingServicePriority(size=30, maxlength=50) }}</br>
+														{{ form.IntShippingServiceOption_ShipToLocation.label }}:			{{ form.IntShippingServiceOption_ShipToLocation(size=30, maxlength=50) }}</br>
+
+														{{ form.ShippingType.label }}:										{{ form.ShippingType(size=30, maxlength=50) }}</br>
+														{{ form.ThirdPartyCheckout.label }}:									{{ form.ThirdPartyCheckout(size=30, maxlength=50) }}</br>
+
+														<h5>InsuranceDetails Data</h5>
+
+														{{ form.InsuranceDetails_InsuranceOption.label }}:					{{ form.InsuranceDetails_InsuranceOption(size=30, maxlength=50) }}</br>
+
+														<h5>InternationalInsuranceDetails Data</h5>
+
+														{{ form.InternationalInsuranceDetails_InsuranceOption.label }}:		{{ form.InternationalInsuranceDetails_InsuranceOption(size=30, maxlength=50) }}</br>
+
+														{{ form.ShippingDetails_ShippingDiscountProfileID.label }}:				{{ form.ShippingDetails_ShippingDiscountProfileID(size=30, maxlength=50) }}</br>
+														{{ form.ShippingDetails_InternationalShippingDiscountProfile.label }}:	{{ form.ShippingDetails_InternationalShippingDiscountProfile(size=30, maxlength=50) }}</br>
+														{{ form.ShippingDetails_SellerExcludeShipToLocationsPreferen.label }}:	{{ form.ShippingDetails_SellerExcludeShipToLocationsPreferen(size=30, maxlength=50) }}</br>
+
+														{{ form.ShipToLocations.label }}:									{{ form.ShipToLocations(size=30, maxlength=50) }}</br>
+														{{ form.Site.label }}:												{{ form.Site(size=30, maxlength=50) }}</br>
+
+														<hr>
+														<h4>Storefront Data</h4>
+														{{ form.Storefront_StoreCategoryID.label }}:							{{ form.Storefront_StoreCategoryID(size=30, maxlength=50) }}</br>
+														{{ form.Storefront_StoreCategory2ID.label }}:						{{ form.Storefront_StoreCategory2ID(size=30, maxlength=50) }}</br>
+														{{ form.Storefront_StoreURL.label }}:								{{ form.Storefront_StoreURL(size=30, maxlength=50) }}</br>
+
+														{{ form.TimeLeft.label }}:											{{ form.TimeLeft(size=30, maxlength=50, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+														{{ form.HitCount.label }}:											{{ form.HitCount(size=30, maxlength=50) }}</br>
+														{{ form.LocationDefaulted.label }}:									{{ form.LocationDefaulted(size=30, maxlength=50) }}</br>
+														{{ form.GetItFast.label }}:											{{ form.GetItFast(size=30, maxlength=50) }}</br>
+														{{ form.BuyerResponsibleForShipping.label }}:						{{ form.BuyerResponsibleForShipping(size=30, maxlength=50) }}</br>
+														{{ form.SKU.label }}:												{{ form.SKU(size=30, maxlength=50) }}</br>
+														{{ form.PostalCode.label }}:											{{ form.PostalCode(size=15, maxlength=25) }}</br>
+														<hr>
+
+														{{ form.DispatchTimeMax.label }}:									{{ form.DispatchTimeMax(size=30, maxlength=50) }}</br>
+														{{ form.ProxyItem.label }}:											{{ form.ProxyItem(size=30, maxlength=50) }}</br>
+														<hr>
+														<h4>BuyerGuaranteePrice Data</h4>
+														{{ form.BuyerGuaranteePrice_currencyID.label }}:						{{ form.BuyerGuaranteePrice_currencyID(size=1) }}</br>
+														{{ form.BuyerGuaranteePrice_text.label }}:							{{ form.BuyerGuaranteePrice_text(size=30, maxlength=50) }}</br>
+														<hr>
+														<h4>BuyerRequirementDetails Data</h4>
+														{{ form.BuyerRequirementDetails_MinimumFeedbackScore.label }}:		{{ form.BuyerRequirementDetails_MinimumFeedbackScore(size=30, maxlength=50) }}</br>
+
+														<h5>MaximumUnpaidItemStrikesInfo Data</h5>
+
+														{{ form.BRDMaximumUnpaidItemStrikesInfo_Count.label }}:				{{ form.BRDMaximumUnpaidItemStrikesInfo_Count(size=30, maxlength=50) }}</br>
+														{{ form.BRDMaximumUnpaidItemStrikesInfo_Period.label }}:				{{ form.BRDMaximumUnpaidItemStrikesInfo_Period(size=30, maxlength=50) }}</br>
+
+														{{ form.IntangibleItem.label }}:									{{ form.IntangibleItem(size=30, maxlength=50) }}</br>
+														<hr>
+														<h4>ReturnPolicy Data</h4>
+														{{ form.ReturnPolicy_RefundOption.label }}:							{{ form.ReturnPolicy_RefundOption(size=30, maxlength=50) }}</br>
+														{{ form.ReturnPolicy_Refund.label }}:								{{ form.ReturnPolicy_Refund(size=30, maxlength=50) }}</br>
+														{{ form.ReturnPolicy_ReturnsWithinOption.label }}:					{{ form.ReturnPolicy_ReturnsWithinOption(size=30, maxlength=50) }}</br>
+														{{ form.ReturnPolicy_ReturnsWithin.label }}:						{{ form.ReturnPolicy_ReturnsWithin(size=30, maxlength=50) }}</br>
+														{{ form.ReturnPolicy_ReturnsAcceptedOption.label }}:				{{ form.ReturnPolicy_ReturnsAcceptedOption(size=30, maxlength=50) }}</br>
+														{{ form.ReturnPolicy_ReturnsAccepted.label }}:						{{ form.ReturnPolicy_ReturnsAccepted(size=30, maxlength=50) }}</br>
+														{{ form.ReturnPolicy_Description.label }}:							{{ form.ReturnPolicy_Description(size=30, maxlength=50) }}</br>
+														{{ form.ReturnPolicy_ShippingCostPaidByOption.label }}:				{{ form.ReturnPolicy_ShippingCostPaidByOption(size=30, maxlength=50) }}</br>
+														{{ form.ReturnPolicy_ShippingCostPaidBy.label }}:					{{ form.ReturnPolicy_ShippingCostPaidBy(size=30, maxlength=50) }}</br>
+														{{ form.ReturnPolicy_RestockingFeeValue.label }}:					{{ form.ReturnPolicy_RestockingFeeValue(size=30, maxlength=50) }}</br>
+														{{ form.ReturnPolicy_RestockingFeeValueOption.label }}:				{{ form.ReturnPolicy_RestockingFeeValueOption(size=30, maxlength=50) }}</br>
+
+														{{ form.ConditionDescription.label }}:								{{ form.ConditionDescription(size=30, maxlength=50) }}</br>
+														{{ form.PostCheckoutExperienceEnabled.label }}:						{{ form.PostCheckoutExperienceEnabled(size=30, maxlength=50) }}</br>
+														<hr>
+														<h4>SellerProfiles Data</h4>
+
+														<h5>SellerShippingProfile Data</h5>
+
+														{{ form.SPShippingProfileID.label }}:								{{ form.SPShippingProfileID(size=30, maxlength=50, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+														{{ form.SPShippingProfileName.label }}:								{{ form.SPShippingProfileName(size=30, maxlength=50) }}</br>
+
+														<h5>SellerReturnProfile Data</h5>
+
+														{{ form.SPReturnProfileID.label }}:									{{ form.SPReturnProfileID(size=30, maxlength=50, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+														{{ form.SPReturnProfileName.label }}:								{{ form.SPReturnProfileName(size=30, maxlength=50) }}</br>
+
+														<h5>SellerPaymentProfile Data</h5>
+
+														{{ form.SPPaymentProfileID.label }}:									{{ form.SPPaymentProfileID(size=30, maxlength=50) }}</br>
+														{{ form.SPPaymentProfileName.label }}:								{{ form.SPPaymentProfileName(size=30, maxlength=50) }}</br>
+														<hr>
+														<h4>ShippingPackageDetails Data</h4>
+														{{ form.ShippingPackageDetails_ShippingIrregular.label }}:			{{ form.ShippingPackageDetails_ShippingIrregular(size=30, maxlength=50) }}</br>
+														{{ form.ShippingPackageDetails_ShippingPackage.label }}:				{{ form.ShippingPackageDetails_ShippingPackage(size=30, maxlength=50) }}</br>
+
+														<h5>PackageDepth Data</h5>
+
+														{{ form.SDPackageDepth_measurementSystem.label }}:					{{ form.SDPackageDepth_measurementSystem(size=30, maxlength=50) }}</br>
+														{{ form.SDPackageDepth_unit.label }}:								{{ form.SDPackageDepth_unit(size=30, maxlength=50) }}</br>
+														{{ form.SDPackageDepth_text.label }}:								{{ form.SDPackageDepth_text(size=30, maxlength=50) }}</br>
+
+														<h5>PackageLength Data</h5>
+
+														{{ form.SDPackageLength_measurementSystem.label }}:					{{ form.SDPackageLength_measurementSystem(size=30, maxlength=50) }}</br>
+														{{ form.SDPackageLength_unit.label }}:								{{ form.SDPackageLength_unit(size=30, maxlength=50) }}</br>
+														{{ form.SDPackageLength_text.label }}:								{{ form.SDPackageLength_text(size=30, maxlength=50) }}</br>
+
+														<h5>PackageWidth Data</h5>
+
+														{{ form.CSRPackageWidth_measurementSystem.label }}:					{{ form.SDPackageWidth_measurementSystem(size=30, maxlength=50) }}
+														{{ form.CSRPackageWidth_unit.label }}:								{{ form.SDPackageWidth_unit(size=30, maxlength=50) }}</br>
+														{{ form.CSRPackageWidth_text.label }}:								{{ form.SDPackageWidth_text(size=30, maxlength=50) }}</br>
+
+														<h5>WeightMajor Data</h5>
+
+														{{ form.SDWeightMajor_measurementSystem.label }}:					{{ form.SDWeightMajor_measurementSystem(size=30, maxlength=50) }}</br>
+														{{ form.SDWeightMajor_unit.label }}:								{{ form.SDWeightMajor_unit(size=30, maxlength=50) }}</br>
+														{{ form.SDWeightMajor_text.label }}:								{{ form.SDWeightMajor_text(size=30, maxlength=50) }}</br>
+
+														<h5>WeightMinor Data</h5>
+
+														{{ form.SDWeightMinor_measurementSystem.label }}:					{{ form.SDWeightMinor_measurementSystem(size=30, maxlength=50) }}</br>
+														{{ form.SDWeightMinor_unit.label }}:								{{ form.SDWeightMinor_unit(size=30, maxlength=50) }}</br>
+														{{ form.SDWeightMinor_text.label }}:								{{ form.SDWeightMinor_text(size=30, maxlength=50) }}</br>
+
+														{{ form.RelistParentID.label }}:									{{ form.RelistParentID(size=30, maxlength=50) }}</br>
+														{{ form.HideFromSearch.label }}:									{{ form.HideFromSearch(size=30, maxlength=50) }}</br>
+
+														{{ form.submit }}
+													</section>
+												</div><!-- /.tab-pane -->
+												
+												<div class="tab-pane" id="tab_3">
+													<section>
+														<div id="Status"><h1>Item Status:</h1></div>
+														{{ form.xmlns.label }}:										{{ form.xmlns(size=50, maxlength=50, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+														{{ form.Ack.label }}:										{{ form.Ack(size=15, maxlength=20, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+														{{ form.Version.label }}:									{{ form.Version(size=10, maxlength=15, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+														{{ form.Build.label }}:										{{ form.Build(size=30, maxlength=50, style='background-color:#FCF5D8', readonly="readonly") }}</br>
+														<hr>
+														{% for message in form.Quantity.errors %}
+															<div class="flash">{{ message }}</div>
+														{% endfor %}
+														<hr>
+														<h2>FORM ERRORS </h2>
+														{% if form.errors %}
+															<ul class="errors">
+																{% for field_name, field_errors in form.errors|dictsort if field_errors %}
+																	{% for error in field_errors %}
+																		<li>{{ form[field_name].label }}: {{ error }}</li>
+																	{% endfor %}
+																{% endfor %}
+															</ul>
+														{% endif %}
+													</section>
+												</div><!-- /.tab-pane -->
+
+											</div><!-- /.tab-content -->
+										</div><!-- nav-tabs-custom -->
+
+										</form>
+									</div>
+							</div><!-- /.box -->
+						</div><!-- /.col -->
+					</div><!-- /.row -->
+				</section><!-- /.content -->
+			</div><!-- /.content-wrapper -->
+
+			{% include 'footer.html' %}
+
+		</div><!-- ./wrapper -->
+		<!-- jQuery 2.1.3 -->
+		<script src="{{ url_for('static', filename='plugins/jQuery/jQuery-2.1.3.min.js')}}"></script>
+
+		<!-- jQuery UI 1.11.2 -->
+		<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.min.js" type="text/javascript"></script>
+		<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+		<script>
+			$.widget.bridge('uibutton', $.ui.button);
+		</script>
+		<!-- Bootstrap 3.3.2 JS -->
+		<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js')}}" type="text/javascript"></script>
+
+		<!-- AdminLTE App -->
+		<script src="{{ url_for('static', filename='dist/js/app.min.js')}}" type="text/javascript"></script>
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+				var JSON_data = '{{listdata}}'; //JSON.stringify('{{listdata}}');
+				var FormState = "{{app.config["FORM_SUBMIT"]}}";
+				JSON_data = JSON_data.replace(/&#34;/g, '"');
+				//alert(JSON_data);
+				var data = $.parseJSON(JSON_data);
+				
+				
+				document.getElementById("xmlns").value = data.GetItemResponse['@xmlns'];
+				document.getElementById("Timestamp").value = data.GetItemResponse.Timestamp;
+				document.getElementById("Ack").value = data.GetItemResponse.Ack;
+				document.getElementById("Status").disabled = false;
+				if (data.GetItemResponse.Ack == "Success")
+				{
+					if (FormState == "True")
+					{
+						// We have submitted form data
+						document.getElementById("Status").innerHTML = "<H1>UPDATE SUCCESSFUL FOR ITEM<br /> (" + data.GetItemResponse.Item.ItemID + ") '" + data.GetItemResponse.Item.Title + "' </H1>";
+					}
+					else
+					{
+						// We have either this is the first time to the page, it was refreshed or we did a internal page update
+						document.getElementById("Status").innerHTML = "<H1>ALL DATA FIELDS LOADED SUCCESSFULLY </H1>";
+					}
+					document.getElementById("Status").disabled = true;
+				}
+				else
+				{
+					document.getElementById("link_tab3").innerHTML = "*** ERROR! ***"
+					document.getElementById("Status").innerHTML = "<H1>UPDATE SUCCESSFUL FOR ITEM (" + data.GetItemResponse.Item.ItemID + ") " + data.GetItemResponse.Item.Title + " </H1>";
+					document.getElementById("Status").disabled = true;
+				}
+
+
+				document.getElementById("Version").value = data.GetItemResponse.Version;
+				document.getElementById("Build").value = data.GetItemResponse.Build;
+				//ITEM DATA
+				document.getElementById("AppData").checked = eval(data.GetItemResponse.Item.ApplicationData) ? true : false;
+				document.getElementById("AutoPay").checked = eval(data.GetItemResponse.Item.AutoPay) ? true : false;
+				document.getElementById("BuyerProtection").value = String(data.GetItemResponse.Item.BuyerProtection);
+					//BuyNowPrice
+				document.getElementById("BuyItNowPrice_currencyID").value = data.GetItemResponse.Item.BuyItNowPrice['@currencyID'];
+				document.getElementById("BuyItNowPrice_text").value = data.GetItemResponse.Item.BuyItNowPrice['#text'];
+		
+				document.getElementById("Country").value = String(data.GetItemResponse.Item.Country);
+				document.getElementById("Currency").value = data.GetItemResponse.Item.Currency;
+				document.getElementById("GiftIcon").value = eval(data.GetItemResponse.Item.GiftIcon) ? "ON" : "OFF";
+				document.getElementById("HitCounter").value = String(data.GetItemResponse.Item.HitCounter);
+				document.getElementById("ItemId").value = data.GetItemResponse.Item.ItemID;
+					//ListingDetails
+				document.getElementById("ListingDetails_Adult").checked = eval(data.GetItemResponse.Item.ListingDetails.Adult) ? true : false;
+				document.getElementById("ListingDetails_BindingAuction").checked = eval(data.GetItemResponse.Item.ListingDetails.BindingAuction) ? true : false;
+				document.getElementById("ListingDetails_CheckoutEnabled").checked = eval(data.GetItemResponse.Item.ListingDetails.CheckoutEnabled) ? true : false;
+				document.getElementById("LDConvertedBuyItNowPrice_currencyID").value = data.GetItemResponse.Item.ListingDetails.ConvertedBuyItNowPrice['@currencyID'];
+				document.getElementById("LDConvertedBuyItNowPrice_text").value = data.GetItemResponse.Item.ListingDetails.ConvertedBuyItNowPrice['#text'];
+				document.getElementById("LDConvertedStartPrice_currencyID").value = data.GetItemResponse.Item.ListingDetails.ConvertedStartPrice['@currencyID'];
+				document.getElementById("LDConvertedStartPrice_text").value = data.GetItemResponse.Item.ListingDetails.ConvertedStartPrice['#text'];
+				document.getElementById("LDConvertedReservePrice_currencyID").value = data.GetItemResponse.Item.ListingDetails.ConvertedReservePrice['@currencyID'];
+				document.getElementById("LDConvertedReservePrice_text").value = data.GetItemResponse.Item.ListingDetails.ConvertedReservePrice['#text'];
+				document.getElementById("ListingDetails_HasReservePrice").checked = eval(data.GetItemResponse.Item.ListingDetails.HasReservePrice) ? true : false;
+				document.getElementById("ListingDetails_StartTime").value = data.GetItemResponse.Item.ListingDetails.StartTime;
+				document.getElementById("ListingDetails_EndTime").value = data.GetItemResponse.Item.ListingDetails.EndTime;
+				document.getElementById("ListingDetails_ViewItemURL").value = data.GetItemResponse.Item.ListingDetails.ViewItemURL;
+				document.getElementById("itemlink").href = data.GetItemResponse.Item.ListingDetails.ViewItemURL;
+				
+				document.getElementById("ListingDetails_HasUnansweredQuestions").checked = eval(data.GetItemResponse.Item.ListingDetails.HasUnansweredQuestions) ? true : false;
+				document.getElementById("ListingDetails_HasPublicMessages").checked = eval(data.GetItemResponse.Item.ListingDetails.HasPublicMessages) ? true : false;
+				document.getElementById("ListingDetails_ViewItemURLForNaturalSearch").value = data.GetItemResponse.Item.ListingDetails.ViewItemURLForNaturalSearch;
+		
+				document.getElementById("ListingDuration").value = data.GetItemResponse.Item.ListingDuration;
+				document.getElementById("ListingType").value = data.GetItemResponse.Item.ListingType;
+				document.getElementById("Location").value = data.GetItemResponse.Item.Location;
+				document.getElementById("PaymentMethods").value = data.GetItemResponse.Item.PaymentMethods;
+				document.getElementById("PayPalEmailAddress").value = data.GetItemResponse.Item.PayPalEmailAddress;
+				if (document.getElementById("PayPalEmailAddress").value == "")
+				{
+					document.getElementById("AutoPay").disabled = true;
+				}
+					//PrimaryCategory
+				document.getElementById("PrimaryCategory_CategoryID").value = data.GetItemResponse.Item.PrimaryCategory.CategoryID;
+				document.getElementById("PrimaryCategory_CategoryName").value = data.GetItemResponse.Item.PrimaryCategory.CategoryName;
+		
+				document.getElementById("PrivateListing").checked = eval(data.GetItemResponse.Item.PrivateListing) ? true : false;
+				document.getElementById("Quantity").value = data.GetItemResponse.Item.Quantity;
+					//ReservePrice
+				document.getElementById("ReservePrice_currencyID").value = data.GetItemResponse.Item.ReservePrice['@currencyID'];
+				document.getElementById("ReservePrice_text").value = data.GetItemResponse.Item.ReservePrice['#text'];
+				if (parseInt(document.getElementById("ReservePrice_text").value) == 0) 
+				{
+					document.getElementById("ReservePrice_currencyID").disabled = true;
+					document.getElementById("ReservePrice_text").readOnly = true;
+					document.getElementById("ReservePrice_currencyID").style.backgroundColor = '#FCF5D8';
+					document.getElementById("ReservePrice_text").style.backgroundColor = '#FCF5D8';
+				}
+					//ReviseStatus
+				document.getElementById("ReviseStatus_ItemRevised").checked = eval(data.GetItemResponse.Item.ReviseStatus.ItemRevised) ? true : false;
+					//Seller
+				document.getElementById("Seller_AboutMePage").checked = eval(data.GetItemResponse.Item.Seller.AboutMePage) ? true : false;
+				document.getElementById("Seller_Email").value = data.GetItemResponse.Item.Seller.Email;
+				document.getElementById("Seller_FeedbackScore").value = data.GetItemResponse.Item.Seller.FeedbackScore;
+				document.getElementById("Seller_PositiveFeedbackPercent").value = data.GetItemResponse.Item.Seller.PositiveFeedbackPercent;
+				document.getElementById("Seller_FeedbackPrivate").checked = eval(data.GetItemResponse.Item.Seller.FeedbackPrivate) ? true : false;
+				document.getElementById("Seller_FeedbackRatingStar").value = data.GetItemResponse.Item.Seller.FeedbackRatingStar;
+				document.getElementById("Seller_IDVerified").checked = eval(data.GetItemResponse.Item.Seller.IDVerified) ? true : false;
+				document.getElementById("Seller_eBayGoodStanding").checked = eval(data.GetItemResponse.Item.Seller.eBayGoodStanding) ? true : false;
+				document.getElementById("Seller_NewUser").checked = eval(data.GetItemResponse.Item.Seller.NewUser) ? true : false;
+				document.getElementById("Seller_RegistrationDate").value = data.GetItemResponse.Item.Seller.RegistrationDate;
+				document.getElementById("Seller_Site").value = data.GetItemResponse.Item.Seller.Site;
+				document.getElementById("Seller_Status").value = data.GetItemResponse.Item.Seller.Status;
+				document.getElementById("Seller_UserID").value = data.GetItemResponse.Item.Seller.UserID;
+				document.getElementById("Seller_UserIDChanged").checked = eval(data.GetItemResponse.Item.Seller.UserIDChanged) ? true : false;
+				document.getElementById("Seller_UserIDLastChanged").value = data.GetItemResponse.Item.Seller.UserIDLastChanged;
+				document.getElementById("Seller_VATStatus").value = data.GetItemResponse.Item.Seller.VATStatus;
+						//SellerInfo
+				document.getElementById("SSellerInfo_AllowPaymentEdit").checked = eval(data.GetItemResponse.Item.Seller.SellerInfo.AllowPaymentEdit) ? true : false;
+				document.getElementById("SSellerInfo_CheckoutEnabled").checked = eval(data.GetItemResponse.Item.Seller.SellerInfo.CheckoutEnabled) ? true : false;
+				document.getElementById("SSellerInfo_CIPBankAccountStored").checked = eval(data.GetItemResponse.Item.Seller.SellerInfo.CIPBankAccountStored) ? true : false;
+				document.getElementById("SSellerInfo_GoodStanding").checked = eval(data.GetItemResponse.Item.Seller.SellerInfo.GoodStanding) ? true : false;
+				document.getElementById("SSellerInfo_LiveAuctionAuthorized").checked = eval(data.GetItemResponse.Item.Seller.SellerInfo.LiveAuctionAuthorized) ? true : false;
+				document.getElementById("SSellerInfo_MerchandizingPref").value = data.GetItemResponse.Item.Seller.SellerInfo.MerchandizingPref;
+				document.getElementById("SSellerInfo_QualifiesForB2BVAT").checked = eval(data.GetItemResponse.Item.Seller.SellerInfo.QualifiesForB2BVAT) ? true : false;
+				document.getElementById("SSellerInfo_SellerLevel").value = data.GetItemResponse.Item.Seller.SellerInfo.SellerLevel;
+				document.getElementById("SSellerInfo_StoreOwner").checked = eval(data.GetItemResponse.Item.Seller.SellerInfo.StoreOwner) ? true : false;
+				document.getElementById("SSellerInfo_StoreURL").value = data.GetItemResponse.Item.Seller.SellerInfo.StoreURL;
+				document.getElementById("SSellerInfo_SafePaymentExempt").checked = eval(data.GetItemResponse.Item.Seller.SellerInfo.SafePaymentExempt) ? true : false;
+				document.getElementById("Seller_MotorsDealer").checked = eval(data.GetItemResponse.Item.Seller.MotorsDealer) ? true : false;
+						//SellingStatus
+				document.getElementById("SellingStatus_BidCount").value = data.GetItemResponse.Item.SellingStatus.BidCount;
+				document.getElementById("BidIncrement_currencyID").value = data.GetItemResponse.Item.SellingStatus.BidIncrement['@currencyID'];
+				document.getElementById("BidIncrement_text").value = data.GetItemResponse.Item.SellingStatus.BidIncrement['#text'];
+				document.getElementById("ConvertedCurrentPrice_currencyID").value = data.GetItemResponse.Item.SellingStatus.ConvertedCurrentPrice['@currencyID'];
+				document.getElementById("ConvertedCurrentPrice_text").value = data.GetItemResponse.Item.SellingStatus.ConvertedCurrentPrice['#text'];
+				document.getElementById("CurrentPrice_currencyID").value = data.GetItemResponse.Item.SellingStatus.CurrentPrice['@currencyID'];
+				document.getElementById("CurrentPrice_text").value = data.GetItemResponse.Item.SellingStatus.CurrentPrice['#text'];
+				document.getElementById("SellingStatus_LeadCount").value = data.GetItemResponse.Item.SellingStatus.LeadCount;
+				document.getElementById("MinimumToBid_currencyID").value = data.GetItemResponse.Item.SellingStatus.MinimumToBid['@currencyID'];
+				document.getElementById("MinimumToBid_text").value = data.GetItemResponse.Item.SellingStatus.MinimumToBid['#text'];
+				document.getElementById("SellingStatus_QuantitySold").value = data.GetItemResponse.Item.SellingStatus.QuantitySold;
+				document.getElementById("SellingStatus_ReserveMet").checked = eval(data.GetItemResponse.Item.SellingStatus.ReserveMet) ? true : false;
+				document.getElementById("SellingStatus_SecondChanceEligible").checked = eval(data.GetItemResponse.Item.SellingStatus.SecondChanceEligible) ? true : false;
+				document.getElementById("SellingStatus_ListingStatus").value = data.GetItemResponse.Item.SellingStatus.ListingStatus;
+				document.getElementById("SellingStatus_QuantitySoldByPickupInStore").value = data.GetItemResponse.Item.SellingStatus.QuantitySoldByPickupInStore;
+						//ShippingDetails
+				document.getElementById("ShippingDetails_ApplyShippingDiscount").checked = eval(data.GetItemResponse.Item.ShippingDetails.ApplyShippingDiscount) ? true : false;
+				document.getElementById("CalculatedShippingRate_OriginatingPostalCode").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.OriginatingPostalCode;
+							//Packaging
+				document.getElementById("CSRPackageDepth_measurementSystem").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.PackageDepth['@measurementSystem'];
+				document.getElementById("CSRPackageDepth_unit").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.PackageDepth['@unit'];
+				document.getElementById("CSRPackageDepth_text").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.PackageDepth['#text'];
+				document.getElementById("CSRPackageLength_measurementSystem").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.PackageLength['@measurementSystem'];
+				document.getElementById("CSRPackageLength_unit").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.PackageLength['@unit'];
+				document.getElementById("CSRPackageLength_text").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.PackageLength['#text'];
+				document.getElementById("CSRPackageWidth_measurementSystem").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.PackageWidth['@measurementSystem'];
+				document.getElementById("CSRPackageWidth_unit").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.PackageWidth['@unit'];
+				document.getElementById("CSRPackageWidth_text").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.PackageWidth['#text'];
+				document.getElementById("CSRPackageHandlingCosts_currencyID").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.PackagingHandlingCosts['@currencyID'];
+				document.getElementById("CSRPackageHandlingCosts_text").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.PackagingHandlingCosts['#text'];
+							//CalcilatedShippingRate
+				document.getElementById("CalculatedShippingRate_ShippingIrregular").checked = eval(data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.ShippingIrregular) ? true : false;
+				document.getElementById("CalculatedShippingRate_ShippingPackage").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.ShippingPackage;
+				document.getElementById("CSRWeightMajor_measurementSystem").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.WeightMajor['@measurementSystem'];
+				document.getElementById("CSRWeightMajor_unit").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.WeightMajor['@unit'];
+				document.getElementById("CSRWeightMajor_text").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.WeightMajor['#text'];
+				document.getElementById("CSRWeightMinor_measurementSystem").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.WeightMinor['@measurementSystem'];
+				document.getElementById("CSRWeightMinor_unit").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.WeightMinor['@unit'];
+				document.getElementById("SDWeightMinor_text").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.WeightMinor['#text'];
+				document.getElementById("SDInsuranceOption").value = data.GetItemResponse.Item.ShippingDetails.InsuranceOption;
+							//SalesTax
+				document.getElementById("SalesTax_SalesTaxPercent").value = data.GetItemResponse.Item.ShippingDetails.SalesTax.SalesTaxPercent;
+				document.getElementById("SalesTax_ShippingIncludedInTax").checked = eval(data.GetItemResponse.Item.ShippingDetails.SalesTax.ShippingIncludedInTax) ? true : false;
+							//ShippingServiceOptions
+				document.getElementById("ShippingServiceOptions_ShippingService").value = data.GetItemResponse.Item.ShippingDetails.ShippingServiceOptions.ShippingService;
+				document.getElementById("ShippingServiceOptions_ShippingServicePriority").value = data.GetItemResponse.Item.ShippingDetails.ShippingServiceOptions.ShippingServicePriority;
+				document.getElementById("ShippingServiceOptions_ExpeditedService").checked = eval(data.GetItemResponse.Item.ShippingDetails.ShippingServiceOptions.ExpeditedService) ? true : false;
+				document.getElementById("ShippingServiceOptions_ShippingTimeMin").value = data.GetItemResponse.Item.ShippingDetails.ShippingServiceOptions.ShippingTimeMin;
+				document.getElementById("ShippingServiceOptions_ShippingTimeMax").value = data.GetItemResponse.Item.ShippingDetails.ShippingServiceOptions.ShippingTimeMax;
+				document.getElementById("ShippingType").value = data.GetItemResponse.Item.ShippingDetails.ShippingType;
+				document.getElementById("ThirdPartyCheckout").checked = eval(data.GetItemResponse.Item.ShippingDetails.ThirdPartyCheckout) ? true : false;
+							//InsuranceDetails
+				document.getElementById("InsuranceDetails_InsuranceOption").value = data.GetItemResponse.Item.ShippingDetails.InsuranceDetails.InsuranceOption;
+
+				document.getElementById("ShippingDetails_ShippingDiscountProfileID").value = data.GetItemResponse.Item.ShippingDetails.ShippingDetails_ShippingDiscountProfileID;
+				document.getElementById("ShippingDetails_InternationalShippingDiscountProfile").value = data.GetItemResponse.Item.ShippingDetails.ShippingDetails_InternationalShippingDiscountProfile;
+				document.getElementById("ShippingDetails_SellerExcludeShipToLocationsPreferen").value = data.GetItemResponse.Item.ShippingDetails.ShippingDetails_SellerExcludeShipToLocationsPreferen;
+				document.getElementById("ShipToLocations").value = data.GetItemResponse.Item.ShipToLocations;
+				document.getElementById("Site").value = data.GetItemResponse.Item.Site;
+						//StartPrice
+				document.getElementById("StartPrice_currencyID").value = data.GetItemResponse.Item.StartPrice['@currencyID'];
+				document.getElementById("StartPrice_text").value = data.GetItemResponse.Item.StartPrice['#text'];
+						//StoreFront
+				//document.getElementById("Storefront_StoreCategoryID").value = data.GetItemResponse.Item.Storefront.StoreCategoryID;
+				//document.getElementById("Storefront_StoreCategory2ID").value = data.GetItemResponse.Item.Storefront.StoreCategory2ID;
+				//document.getElementById("Storefront_StoreURL").value = data.GetItemResponse.Item.Storefront.StoreURL;
+
+				document.getElementById("TimeLeft").value = data.GetItemResponse.Item.TimeLeft;
+				document.getElementById("Title").value = data.GetItemResponse.Item.Title;
+				document.getElementById("HitCount").value = data.GetItemResponse.Item.HitCount;
+				document.getElementById("LocationDefaulted").checked = eval(data.GetItemResponse.Item.LocationDefaulted) ? true : false;
+				document.getElementById("GetItFast").checked = eval(data.GetItemResponse.Item.GetItFast) ? true : false;
+				document.getElementById("BuyerResponsibleForShipping").value = data.GetItemResponse.Item.BuyerResponsibleForShipping;
+				document.getElementById("SKU").value = data.GetItemResponse.Item.SKU;
+				document.getElementById("PostalCode").value = data.GetItemResponse.Item.PostalCode;
+						//Picture Gallery
+				document.getElementById("PictureDetails_GalleryType").value = data.GetItemResponse.Item.PictureDetails.GalleryType;
+				document.getElementById("PictureDetails_GalleryURL").value = data.GetItemResponse.Item.PictureDetails.GalleryURL;
+				document.getElementById("PictureDetails_PhotoDisplay").value = data.GetItemResponse.Item.PictureDetails.PhotoDisplay;
+
+				document.getElementById("PictureDetails_PictureURL").value = String(data.GetItemResponse.Item.PictureDetails.PictureURL).replace(/,/g, '\n');
+				PicArray = document.getElementById("PictureDetails_PictureURL").value.split(",");
+				if (PicArray.length > 0)
+				{
+					var count = 0;
+					var width = 0;
+					var height = 0;
+					var img = new Image();
+					document.getElementById("itempic").src = PicArray[0];
+					img = document.getElementById('itempic'); 
+					width = img.clientWidth;
+					height = img.clientHeight;
+					//alert("width:" + width + "\nheight:" + height);
+					document.getElementById("img_width").innerHTML = width;
+					document.getElementById("img_height").innerHTML = height;
+					document.getElementById("itempic").style.height = "200px";
+				}
+				else
+				{
+					document.getElementById("itempic").src = "blank.gif";
+				}
+
+				document.getElementById("DispatchTimeMax").value = data.GetItemResponse.Item.DispatchTimeMax;
+				document.getElementById("ProxyItem").checked = eval(data.GetItemResponse.Item.ProxyItem) ? true : false;
+							//BuyerGuaranteePrice
+				document.getElementById("BuyerGuaranteePrice_currencyID").value = data.GetItemResponse.Item.BuyerGuaranteePrice['@currencyID'];
+				document.getElementById("BuyerGuaranteePrice_text").value = String(data.GetItemResponse.Item.BuyerGuaranteePrice['#text']);
+
+				//document.getElementById("BuyerRequirementDetails_MinimumFeedbackScore").value = data.GetItemResponse.Item.BuyerRequirementDetails.MinimumFeedbackScore;
+				//document.getElementById("BRDMaximumUnpaidItemStrikesInfo_Count").value = data.GetItemResponse.Item.BuyerRequirementDetails.MaximumUnpaidItemStrikesInfo_Count;
+				//document.getElementById("BRDMaximumUnpaidItemStrikesInfo_Period").value = data.GetItemResponse.Item.BuyerRequirementDetails.MaximumUnpaidItemStrikesInfo_Period;
+
+				document.getElementById("IntangibleItem").checked = eval(data.GetItemResponse.Item.IntangibleItem) ? true : false;
+							//ReturnPolicy
+				//document.getElementById("ReturnPolicy_RefundOption").value = data.GetItemResponse.Item.ReturnPolicy.RefundOption;
+				//document.getElementById("ReturnPolicy_Refund").value = data.GetItemResponse.Item.ReturnPolicy.Refund;
+				//document.getElementById("ReturnPolicy_ReturnsWithinOption").value = data.GetItemResponse.Item.ReturnPolicy.ReturnsWithinOption;
+				//document.getElementById("ReturnPolicy_ReturnsWithin").value = data.GetItemResponse.Item.ReturnPolicy.ReturnsWithin;
+				document.getElementById("ReturnPolicy_ReturnsAcceptedOption").value = data.GetItemResponse.Item.ReturnPolicy.ReturnsAcceptedOption;
+				document.getElementById("ReturnPolicy_ReturnsAccepted").value = data.GetItemResponse.Item.ReturnPolicy.ReturnsAccepted;
+				//document.getElementById("ReturnPolicy_Description").value = data.GetItemResponse.Item.ReturnPolicy.Description;
+				//document.getElementById("ReturnPolicy_ShippingCostPaidByOption").value = data.GetItemResponse.Item.ReturnPolicy.ShippingCostPaidByOption;
+				//document.getElementById("ReturnPolicy_ShippingCostPaidBy").value = data.GetItemResponse.Item.ReturnPolicy.ShippingCostPaidBy;
+				//document.getElementById("ReturnPolicy_RestockingFeeValue").value = data.GetItemResponse.Item.ReturnPolicy.RestockingFeeValue;
+				//document.getElementById("ReturnPolicy_RestockingFeeValueOption").value = data.GetItemResponse.Item.ReturnPolicy.RestockingFeeValueOption;
+				//document.getElementById("ConditionDescription").value = data.GetItemResponse.Item.ConditionDescription;
+						//SellerProfile
+				document.getElementById("PostCheckoutExperienceEnabled").checked = eval(data.GetItemResponse.Item.PostCheckoutExperienceEnabled) ? true : false;
+				document.getElementById("SPShippingProfileID").value = data.GetItemResponse.Item.SellerProfiles.SellerShippingProfile.ShippingProfileID;
+				document.getElementById("SPShippingProfileName").value = data.GetItemResponse.Item.SellerProfiles.SellerShippingProfile.ShippingProfileName;
+				document.getElementById("SPReturnProfileID").value = data.GetItemResponse.Item.SellerProfiles.SellerReturnProfile.ReturnProfileID;
+				document.getElementById("SPReturnProfileName").value = data.GetItemResponse.Item.SellerProfiles.SellerReturnProfile.ReturnProfileName;
+				document.getElementById("SPPaymentProfileID").value = data.GetItemResponse.Item.SellerProfiles.SellerPaymentProfile.PaymentProfileID;
+				document.getElementById("SPPaymentProfileName").value = data.GetItemResponse.Item.SellerProfiles.SellerPaymentProfile.PaymentProfileName;
+							//ShippingPackageDetails
+				document.getElementById("ShippingPackageDetails_ShippingIrregular").checked = eval(data.GetItemResponse.Item.ShippingPackageDetails.ShippingIrregular) ? true : false;
+				document.getElementById("ShippingPackageDetails_ShippingPackage").value = data.GetItemResponse.Item.ShippingPackageDetails.ShippingPackageDetails_ShippingPackage;
+				document.getElementById("SDPackageDepth_measurementSystem").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.PackageDepth['@measurementSystem'];
+				document.getElementById("SDPackageDepth_unit").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.PackageDepth['@unit'];
+				document.getElementById("SDPackageDepth_text").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.PackageDepth['#text'];
+				document.getElementById("SDPackageLength_measurementSystem").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.PackageLength['@measurementSystem'];
+				document.getElementById("SDPackageLength_unit").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.PackageLength['@unit'];
+				document.getElementById("SDPackageLength_text").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.PackageLength['#text'];
+				document.getElementById("SDPackageWidth_measurementSystem").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.PackageWidth['@measurementSystem'];
+				document.getElementById("SDPackageWidth_unit").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.PackageWidth['@unit'];
+				document.getElementById("SDPackageWidth_text").value = data.GetItemResponse.Item.ShippingDetails.CalculatedShippingRate.PackageWidth['#text'];
+				document.getElementById("SDWeightMajor_measurementSystem").value = data.GetItemResponse.Item.ShippingPackageDetails.WeightMajor['@measurementSystem'];
+				document.getElementById("SDWeightMajor_unit").value = data.GetItemResponse.Item.ShippingPackageDetails.WeightMajor['@unit'];
+				document.getElementById("SDWeightMajor_text").value = data.GetItemResponse.Item.ShippingPackageDetails.WeightMajor['#text'];
+				document.getElementById("SDWeightMinor_measurementSystem").value = data.GetItemResponse.Item.ShippingPackageDetails.WeightMinor['@measurementSystem'];
+				document.getElementById("SDWeightMinor_unit").value = data.GetItemResponse.Item.ShippingPackageDetails.WeightMinor['@unit'];
+				document.getElementById("SDWeightMinor_text").value = data.GetItemResponse.Item.ShippingPackageDetails.WeightMinor['#text'];
+				//document.getElementById("RelistParentID").value = data.GetItemResponse.Item.RelistParentID;
+
+				document.getElementById("HideFromSearch").checked = eval(data.GetItemResponse.Item.HideFromSearch) ? true : false;
+
+				//var $inputs = $('form input');
+		
+				//$.each(data, function(key, value) {
+				//	alert(key + " " + value);
+				 // $inputs.filter(function() {
+				//	return key == this.name;
+				//  }).val(value);
+				//});
+		
+				//traverse(data, process);
+				//js_traverse(data);
+			} );
+
+			//called with every property and it's value
+			function process(key,value) {
+				document.write(key + "<input text value='" + value + "'><br />");
+			}
+
+			function traverse(o,func) {
+				for (var i in o) {
+					func.apply(this,[i,o[i]]);  
+					if (o[i] !== null && typeof(o[i])=="object") {
+						//going on step down in the object tree!!
+						traverse(o[i],func);
+					}
+				}
+			}
+	
+			function js_traverse(o, label) {
+				var type = typeof o 
+				if (type == "object") {
+					for (var key in o) {
+						js_traverse(o[key], key)
+					}
+				} else {
+					document.write("<b>" + label + "</b>" + ": <input text value='" + o + "'><br />");
+				}
+			}
+			//return an array of objects according to key, value, or key and value matching
+			function getObjects(obj, key, val) {
+				var objects = [];
+				for (var i in obj) {
+					if (!obj.hasOwnProperty(i)) continue;
+					if (typeof obj[i] == 'object') {
+						objects = objects.concat(getObjects(obj[i], key, val));	
+					} else 
+					//if key matches and value matches or if key matches and value is not passed (eliminating the case where key matches but passed value does not)
+					if (i == key && obj[i] == val || i == key && val == '') { //
+						objects.push(obj);
+					} else if (obj[i] == val && key == ''){
+						//only add if the object is not already in the array
+						if (objects.lastIndexOf(obj) == -1){
+							objects.push(obj);
+						}
+					}
+				}
+				return objects;
+			}
+ 
+			//return an array of values that match on a certain key
+			function getValues(obj, key) {
+				var objects = [];
+				for (var i in obj) {
+					if (!obj.hasOwnProperty(i)) continue;
+					if (typeof obj[i] == 'object') {
+						objects = objects.concat(getValues(obj[i], key));
+					} else if (i == key) {
+						objects.push(obj[i]);
+					}
+				}
+				return objects;
+			}
+ 
+			//return an array of keys that match on a certain value
+			function getKeys(obj, val) {
+				var objects = [];
+				for (var i in obj) {
+					if (!obj.hasOwnProperty(i)) continue;
+					if (typeof obj[i] == 'object') {
+						objects = objects.concat(getKeys(obj[i], val));
+					} else if (obj[i] == val) {
+						objects.push(i);
+					}
+				}
+				return objects;
+			}
+		</script>
+	</body>
+</html>
